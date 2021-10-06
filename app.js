@@ -1,4 +1,3 @@
-const { query } = require("express");
 const express = require("express");
 const app = express();
 const { v4: uuid } = require("uuid");
@@ -6,17 +5,21 @@ const { v4: uuid } = require("uuid");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+generateId = () => {
+
+}
+
 const Users = [
-  { id: 1, name: "abiola fasanya", email: "harbiola78@gmail.com" },
-  { id: 2, name: "jane adams", email: "jane@gmail.com" },
-  { id: 3, name: "michael faraday", email: "michael@gmail.com" },
-  { id: 4, name: "christiano ronaldo", email: "ronaldo@gmail.com" },
-  { id: 5, name: "isaac newton", email: "newton@gmail.com" },
-  { id: 6, name: "joe bidden", email: "joe@gmail.com" },
-  { id: 7, name: "adam smith", email: "adams@gmail.com" },
-  { id: 8, name: "white money", email: "white@gmail.com" },
-  { id: 9, name: "sandra udoh", email: "sandra@gmail.com" },
-  { id: 10, name: "johb doe", email: "john@gmail.com" },
+  { id: 1001, name: "abiola fasanya", email: "harbiola78@gmail.com" },
+  { id: 1002, name: "jane adams", email: "jane@gmail.com" },
+  { id: 1003, name: "michael faraday", email: "michael@gmail.com" },
+  { id: 1004, name: "christiano ronaldo", email: "ronaldo@gmail.com" },
+  { id: 1005, name: "isaac newton", email: "newton@gmail.com" },
+  { id: 1006, name: "joe bidden", email: "joe@gmail.com" },
+  { id: 1007, name: "adam smith", email: "adams@gmail.com" },
+  { id: 1008, name: "white money", email: "white@gmail.com" },
+  { id: 1009, name: "sandra udoh", email: "sandra@gmail.com" },
+  { id: 10010, name: "johb doe", email: "john@gmail.com" },
 ];
 
 app.get("/user", async (req, res) => {
@@ -36,6 +39,7 @@ app.get("/user", async (req, res) => {
 });
 
 app.get("/user/:id", async (req, res) => {
+  /* Get single user*/
   try {
     Users.filter((user) => {
       if (user.id == req.params.id) {
