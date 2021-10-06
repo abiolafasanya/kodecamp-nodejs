@@ -86,7 +86,7 @@ app.delete("/user/:id", (req, res) => {
   /* Delete user statements/codes goes below here*/
   try {
     let removeUser = Users.filter(user => user.id !==id);
-    posts = posts.filter(p => p.id !== req.param.id)
+    posts = posts.filter(p => p.id !== req.params.id)
     if (removeUser) {
       res.status(200).json({
         status: 200,
