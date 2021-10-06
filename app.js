@@ -85,7 +85,8 @@ app.post("/user", (req, res) => {
 app.delete("/user/:id", (req, res) => {
   /* Delete user statements/codes goes below here*/
   try {
-    let removeUser = Users.pop({ id: req.params.id });
+    let removeUser = Users.filter(user => user.id !==id);
+    posts = posts.filter(p => p.id !== id)
     if (removeUser) {
       res.status(200).json({
         status: 200,
