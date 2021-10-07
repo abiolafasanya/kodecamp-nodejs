@@ -31,9 +31,9 @@ app.get("/user", async (req, res) => {
       message: `${Users.length} Users found`,
     });
   } catch (err) {
-    res.status(500).json({
-      status: 500,
-      error: [err.message, "Server Error"],
+    res.status(400).json({
+      status: 400,
+      error: [err.message, "failed to get users"],
     });
   }
 });
@@ -51,9 +51,9 @@ app.get("/user/:id", async (req, res) => {
       }
     });
   } catch (err) {
-    res.status(500).json({
-      status: 500,
-      error: [err.message, "Server Error"],
+    res.status(400).json({
+      status: 400,
+      error: [err.message, "User not found"],
     });
   }
 });
@@ -75,8 +75,8 @@ app.post("/user", (req, res) => {
       });
     }
   } catch (err) {
-    res.status(500).json({
-      status: 500,
+    res.status(400).json({
+      status: 400,
       error: ["failed to insert new user", err.message],
     });
   }
@@ -85,18 +85,16 @@ app.post("/user", (req, res) => {
 app.delete("/user/:id", (req, res) => {
   /* Delete user statements/codes goes below here*/
   try {
-    let removeUser = Users.filter(user => user.id !==id);
-    posts = posts.filter(p => p.id !== req.param.id)
-    if (removeUser) {
-      res.status(200).json({
-        status: 200,
-        message: `User ${req.params.id} Deleted`,
-      });
-    }
+   let User = Users.filter(user => user.id !== parseInt(req.params.id))
+        res.status(200).json({
+          status: 200,
+          User,
+          message: `User ${req.params.id} Deleted`,
+        });
   } catch (err) {
-    res.status(500).json({
-      status: 500,
-      error: ["failed to delete", err.message],
+    res.status(400).json({
+      status: 400,
+      error: [`failed to delete user with id: ${req.params.id}`, err.message],
     });
   }
 });
@@ -118,9 +116,9 @@ app.put("/user/:id", (req, res) => {
       });
     }
   } catch (err) {
-    res.status(500).json({
-      status: 500,
-      error: ["failed to delete", err.message],
+    res.status(400).json({
+      status: 400,
+      error: ["failed to update user", err.message],
     });
   }
 });
