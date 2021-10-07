@@ -88,8 +88,8 @@ app.delete("/user/:id", (req, res) => {
    let User = Users.filter(user => user.id !== parseInt(req.params.id))
         res.status(200).json({
           status: 200,
-          User,
           message: `User ${req.params.id} Deleted`,
+          User,
         });
   } catch (err) {
     res.status(400).json({
