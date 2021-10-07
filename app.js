@@ -5,10 +5,6 @@ const { v4: uuid } = require("uuid");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-generateId = () => {
-
-}
-
 const Users = [
   { id: 1001, name: "abiola fasanya", email: "harbiola78@gmail.com" },
   { id: 1002, name: "jane adams", email: "jane@gmail.com" },
