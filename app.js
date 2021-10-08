@@ -4,7 +4,7 @@ const { v4: uuid } = require("uuid");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
+const PORT = process.env.PORT || 3000
 const Users = [
   { id: 1000, name: "abiola fasanya", email: "harbiola78@gmail.com" },
   { id: 1001, name: "johb doe", email: "john@gmail.com" },
@@ -87,6 +87,7 @@ function addUser(req, res) {
         message: "User Inserted",
       })
     }
+    else return res.status(400).json({status: 400, error: 'Operation Failed'})
   } catch (err) {
     res.status(400).json({
       status: 400,
@@ -116,8 +117,8 @@ function updateUser(req, res) {
       })
     }
     else{
-      res.status(400).json({
-        status: [400, false],
+      res.status(404).json({
+        status: [404, false],
         error:  `User does with this ID: ${req.params.id} does not exist`,
       })
     }
@@ -142,7 +143,7 @@ function deleteUser(req, res) {
            status: 200,
            message: `User ${CheckUser.id} has been succeccfully Deleted`,
          })
-    } else return res.status(400).json({status: 400, message: `User with id ${ID} not found`}) 
+    } else return res.status(404).json({status: 404, message: `User with id ${ID} not found`}) 
    } catch (err) {
      res.status(500).json({
        status: 500,
@@ -151,6 +152,6 @@ function deleteUser(req, res) {
    }
 } 
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+app.listen(PORT, () => {
+  console.log("Server running on port %d", PORT);
 });
