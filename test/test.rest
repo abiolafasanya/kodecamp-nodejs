@@ -2,7 +2,7 @@ GET http://localhost:3000/user HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ###
-GET http://localhost:3000/user/1000 HTTP/1.1
+GET http://localhost:3000/user/1005 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ###
@@ -15,11 +15,7 @@ Content-Type: application/json
     "email": "sam@test.com"
 }
 ###
-DELETE http://localhost:3000/user/1006 HTTP/1.1
-Accept: application/json
-Content-Type: application/json
-### 
-put http://localhost:3000/user/2 HTTP/1.1
+put http://localhost:3000/user/1001 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 
@@ -27,3 +23,8 @@ Content-Type: application/json
     "name": "samuel",
     "email": "sam@test.com"
 }
+### 
+
+DELETE http://localhost:3000/user/1007 HTTP/1.1
+Accept: application/json
+Content-Type: application/json

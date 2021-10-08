@@ -32,11 +32,13 @@ app.put("/user/:id", updateUser)
 /* Endpoint action functions */
 function getUsers(req, res) {
   try {
-    res.status(200).json({
+    if (Users.length > 0)
+   return res.status(200).json({
       status: 200,
       data: Users,
       message: `${Users.length} Users found`,
     })
+    else return res.status(400).json({status: 400, error: 'No record found'})
   } catch (err) {
     res.status(400).json({
       status: 400,
@@ -47,22 +49,28 @@ function getUsers(req, res) {
 
 function singleUser(req, res) {
   try {
-    Users.filter((user) => {
-      if (user.id === parseInt(req.params.id)) {
-        res.status(200).json({
-          status: 200,
-          data: user,
-          message: `User with ID:${user.id} found`,
+    let id = parseInt(req.params.id)
+    let user = Users.find((user) => {
+     if (user.id  === id) return true
+     else return false
+     })
+     if (user) {
+       res.status(200).json({
+         status: 200,
+         data: user,
+         message: `User with ID:${user.id} found`,
         })
       }
-    })
+      else {
+        res.status(400).json({status: 400, error: 'User not found'})
+      }
   } catch (err) {
     res.status(400).json({
       status: 400,
       error: [err.message, "User not found"],
     })
-  }
-} 
+  } 
+}
 
 function addUser(req, res) {
   try {
@@ -89,56 +97,54 @@ function addUser(req, res) {
 
 function updateUser(req, res) {
   try {
-    let index = Users.findIndex((user) => user.id == req.params.id);
-    let id, name, email, password;
-    id = req.params.id;
-    name = req.body.name;
-    email = req.body.email;
-    let updateUser = (Users[index] = {id, name, email});
-    if (updateUser) {
+    let id = parseInt(req.params.id)
+   let user = Users.find((user) => {
+    if (user.id  === id) return true
+    else return false
+    })
+    if (user){
+      let index = Users.findIndex(user => user.id  === id)
+      let {name, email} = req.body || [user.name, user.email]
+      updateId = user.id || req.params.id
+      let updateUser = {id, name, email}
+      Users.splice(index, 1, updateUser)
       res.status(201).json({
         status: 201,
+        index: user.index,
         data: updateUser,
-        message: `User with id ${req.params.id} updated`,
+        message: `User with id ${user.id} updated`,
       })
-    } else {
-      res.status(401).json({
-        status: 401,
-        data: updateUser,
-        message: `User with id ${req.params.id} not found`,
+    }
+    else{
+      res.status(400).json({
+        status: [400, false],
+        error:  `User does with this ID: ${req.params.id} does not exist`,
       })
     }
   } catch (err) {
-    res.status(400).json({
-      status: 400,
-      error: ["failed to update user", err.message],
+    res.status(500).json({
+      status: 500,
+      error: [err.message, "Update failed because User is not found"],
     })
   }
-} 
+}
 
 function deleteUser(req, res) {
   let ID = parseInt(req.params.id)
   try {
     let CheckUser = Users.find(user => {
-      if (user.id  === ID){
-      console.log('request Id is: ',user.id)
-       return user.id
-      }
+      if (user.id  === ID) return true
+      else return false
     })
-    if(CheckUser.id){
-      let User = Users.filter(user => user.id !== CheckUser.id)
-         res.status(200).json({
+    if(CheckUser){
+      let user = Users.filter(user => user.id !== CheckUser.id)
+        return res.status(200).json({
            status: 200,
            message: `User ${CheckUser.id} Deleted`,
-           User,
+           user,
          })
-    } else {
-      res.status(401).json({
-        status: 401,
-        data: updateUser,
-        message: `User with id ${ID} not found`,
-      })
-    }
+    } else return res.status(401).json({status: 401, message: `User with id ${ID} not found`})
+    
    } catch (err) {
      res.status(500).json({
        status: 500,
