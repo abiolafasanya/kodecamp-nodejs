@@ -6,7 +6,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const Users = [
-  { id: 1001, name: "abiola fasanya", email: "harbiola78@gmail.com" },
+  { id: 1000, name: "abiola fasanya", email: "harbiola78@gmail.com" },
+  { id: 1001, name: "johb doe", email: "john@gmail.com" },
   { id: 1002, name: "jane adams", email: "jane@gmail.com" },
   { id: 1003, name: "michael faraday", email: "michael@gmail.com" },
   { id: 1004, name: "christiano ronaldo", email: "ronaldo@gmail.com" },
@@ -15,88 +16,78 @@ const Users = [
   { id: 1007, name: "adam smith", email: "adams@gmail.com" },
   { id: 1008, name: "white money", email: "white@gmail.com" },
   { id: 1009, name: "sandra udoh", email: "sandra@gmail.com" },
-  { id: 10010, name: "johb doe", email: "john@gmail.com" },
 ];
 
-app.get("/user", async (req, res) => {
-  /* Get all users statements/codes goes below here*/
+/* Api Endpoint*/
+app.get("/user", getUsers)
+
+app.get("/user/:id", singleUser)
+
+app.post("/user", addUser)
+
+app.delete("/user/:id", deleteUser)
+
+app.put("/user/:id", updateUser)
+
+/* Endpoint action functions */
+function getUsers(req, res) {
   try {
     res.status(200).json({
       status: 200,
       data: Users,
       message: `${Users.length} Users found`,
-    });
+    })
   } catch (err) {
     res.status(400).json({
       status: 400,
       error: [err.message, "failed to get users"],
-    });
+    })
   }
-});
+} 
 
-app.get("/user/:id", async (req, res) => {
-  /* Get single user*/
+function singleUser(req, res) {
   try {
     Users.filter((user) => {
-      if (user.id == req.params.id) {
+      if (user.id === parseInt(req.params.id)) {
         res.status(200).json({
           status: 200,
           data: user,
           message: `User with ID:${user.id} found`,
-        });
+        })
       }
-    });
+    })
   } catch (err) {
     res.status(400).json({
       status: 400,
       error: [err.message, "User not found"],
-    });
+    })
   }
-});
+} 
 
-app.post("/user", (req, res) => {
-  /* Create user statements/codes goes below here*/
+function addUser(req, res) {
   try {
     let createUser = {
       id: uuid(),
       name: req.body.name,
       email: req.body.email,
-    };
+    }
     let newUser = Users.push(createUser);
     if (newUser) {
       res.status(201).json({
         status: 201,
         data: createUser,
         message: "User Inserted",
-      });
+      })
     }
   } catch (err) {
     res.status(400).json({
       status: 400,
       error: ["failed to insert new user", err.message],
-    });
+    })
   }
-});
+} 
 
-app.delete("/user/:id", (req, res) => {
-  /* Delete user statements/codes goes below here*/
-  try {
-   let User = Users.filter(user => user.id !== parseInt(req.params.id))
-        res.status(200).json({
-          status: 200,
-          message: `User ${req.params.id} Deleted`,
-          User,
-        });
-  } catch (err) {
-    res.status(400).json({
-      status: 400,
-      error: [`failed to delete user with id: ${req.params.id}`, err.message],
-    });
-  }
-});
-
-app.put("/user/:id", (req, res) => {
-  // Update one user
+function updateUser(req, res) {
   try {
     let index = Users.findIndex((user) => user.id == req.params.id);
     let id, name, email, password;
@@ -109,15 +100,52 @@ app.put("/user/:id", (req, res) => {
         status: 201,
         data: updateUser,
         message: `User with id ${req.params.id} updated`,
-      });
+      })
+    } else {
+      res.status(401).json({
+        status: 401,
+        data: updateUser,
+        message: `User with id ${req.params.id} not found`,
+      })
     }
   } catch (err) {
     res.status(400).json({
       status: 400,
       error: ["failed to update user", err.message],
-    });
+    })
   }
-});
+} 
+
+function deleteUser(req, res) {
+  let ID = parseInt(req.params.id)
+  try {
+    let CheckUser = Users.find(user => {
+      if (user.id  === ID){
+      console.log('request Id is: ',user.id)
+       return user.id
+      }
+    })
+    if(CheckUser.id){
+      let User = Users.filter(user => user.id !== CheckUser.id)
+         res.status(200).json({
+           status: 200,
+           message: `User ${CheckUser.id} Deleted`,
+           User,
+         })
+    } else {
+      res.status(401).json({
+        status: 401,
+        data: updateUser,
+        message: `User with id ${ID} not found`,
+      })
+    }
+   } catch (err) {
+     res.status(500).json({
+       status: 500,
+       error: [`failed to delete user with id: ${req.params.id}`, err.message],
+     });
+   }
+} 
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
