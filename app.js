@@ -137,14 +137,12 @@ function deleteUser(req, res) {
       else return false
     })
     if(CheckUser){
-      let user = Users.filter(user => user.id !== CheckUser.id)
+      Users.filter(user => user.id !== CheckUser.id)
         return res.status(200).json({
            status: 200,
-           message: `User ${CheckUser.id} Deleted`,
-           user,
+           message: `User ${CheckUser.id} has been succeccfully Deleted`,
          })
-    } else return res.status(401).json({status: 401, message: `User with id ${ID} not found`})
-    
+    } else return res.status(400).json({status: 400, message: `User with id ${ID} not found`}) 
    } catch (err) {
      res.status(500).json({
        status: 500,
