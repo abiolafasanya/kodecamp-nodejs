@@ -23,11 +23,11 @@ const Users = [
 app.get('/api', (req, res) => {
   res.json({
     endpoints: {
-      getUsers : 'kodecamp.herokuapp.com/api/users',
-      singleUser : 'kodecamp.herokuapp.com/api/user/id',
-      addUser : 'kodecamp.herokuapp.com/api/user/id',
-      updateUser : 'kodecamp.herokuapp.com/api/user/id',
-      deleteUser : 'kodecamp.herokuapp.com/api/user/id',
+      getUsers : 'https://kodecamp.herokuapp.com/api/users',
+      singleUser : 'https://kodecamp.herokuapp.com/api/user/id',
+      addUser : 'https://kodecamp.herokuapp.com/api/user/id',
+      updateUser : 'https://kodecamp.herokuapp.com/api/user/id',
+      deleteUser : 'https://kodecamp.herokuapp.com/api/user/id',
     }, 
     documentation: 'https://github.com/fastbeetech/kodecamp-nodejs'
   })
