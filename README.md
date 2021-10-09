@@ -43,7 +43,7 @@ app.delete("/user/:id", deleteUser)
 ```url
     kodecamp.herokuApp.com/user/id
 ```
-app.put("/user/:id", updateUse
+app.put("/user/:id", updateUser)
 ```url
     kodecamp.herokuApp.com/user/id
 ```
