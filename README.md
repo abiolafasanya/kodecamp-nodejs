@@ -26,9 +26,8 @@
 > Base Url: kodecamp.herokuapp.com
 
 app.get("/users", getUsers)
-```url
-    https://kodecamp.herokuapp.com/api/users
-```
+
+https://kodecamp.herokuapp.com/api/users
 
 app.get("/user/:id", singleUser)
 
