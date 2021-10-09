@@ -25,23 +25,23 @@
 ### Api Endpoint
 > Base Url: kodecamp.herokuapp.com
 
-app.get("/users", getUsers)
+- app.get("/users", getUsers)
 
 https://kodecamp.herokuapp.com/api/users
 
-app.get("/user/:id", singleUser)
+- app.get("/user/:id", singleUser)
 
 https://kodecamp.herokuapp.com/api/user/id
 
-app.post("/user", addUser)
+- app.post("/user", addUser)
 
-https://kodecamp.herokuapp.com/api/user/
+https://kodecamp.heroku- .com/api/user/
 
-app.delete("/user/:id", deleteUser)
+- app.delete("/user/:id", deleteUser)
 
 https://kodecamp.herokuapp.com/api/user/id
 
-app.put("/user/:id", updateUser)
+- app.put("/user/:id", updateUser)
 
 https://kodecamp.herokuapp.com/api/user/id
 
