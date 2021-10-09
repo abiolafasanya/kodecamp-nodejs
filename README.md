@@ -27,24 +27,24 @@
 
 app.get("/users", getUsers)
 ```url
-    kodecamp.herokuApp.com/users
+    https://kodecamp.herokuapp.com/api/users
 ```
 
 app.get("/user/:id", singleUser)
 ```url
-    kodecamp.herokuApp.com/user/id
+    https://kodecamp.herokuapp.com/api/user/id
 ```
 
 app.post("/user", addUser)
 ```url
-    kodecamp.herokuApp.com/user/
+    https://kodecamp.herokuapp.com/api/user/
 ```
 app.delete("/user/:id", deleteUser)
 ```url
-    kodecamp.herokuApp.com/user/id
+    https://kodecamp.herokuapp.com/api/user/id
 ```
 app.put("/user/:id", updateUser)
 ```url
-    kodecamp.herokuApp.com/user/id
+    https://kodecamp.herokuapp.com/api/user/id
 ```
 
