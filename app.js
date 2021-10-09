@@ -5,6 +5,7 @@ const { v4: uuid } = require("uuid");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const PORT = process.env.PORT || 3000
+
 const Users = [
   { id: 1000, name: "abiola fasanya", email: "harbiola78@gmail.com" },
   { id: 1001, name: "johb doe", email: "john@gmail.com" },
@@ -38,10 +39,10 @@ function getUsers(req, res) {
       data: Users,
       message: `${Users.length} Users found`,
     })
-    else return res.status(400).json({status: 400, error: 'No record found'})
+    else return res.status(404).json({status: 404, error: 'No record found'})
   } catch (err) {
-    res.status(400).json({
-      status: 400,
+    res.status(500).json({
+      status: 500,
       error: [err.message, "failed to get users"],
     })
   }
@@ -61,12 +62,10 @@ function singleUser(req, res) {
          message: `User with ID:${user.id} found`,
         })
       }
-      else {
-        res.status(400).json({status: 400, error: 'User not found'})
-      }
+      else return res.status(404).json({status: 404, error: 'User not found'})   
   } catch (err) {
-    res.status(400).json({
-      status: 400,
+    res.status(500).json({
+      status: 500,
       error: [err.message, "User not found"],
     })
   } 
@@ -86,11 +85,10 @@ function addUser(req, res) {
         data: createUser,
         message: "User Inserted",
       })
-    }
-    else return res.status(400).json({status: 400, error: 'Operation Failed'})
+    }  else return res.status(400).json({status: 400, error: 'Operation Failed'})
   } catch (err) {
-    res.status(400).json({
-      status: 400,
+    res.status(500).json({
+      status: 500,
       error: ["failed to insert new user", err.message],
     })
   }
@@ -100,7 +98,7 @@ function updateUser(req, res) {
   try {
     let id = parseInt(req.params.id)
    let user = Users.find((user) => {
-    if (user.id  === id) return true
+    if (user.id === id) return true
     else return false
     })
     if (user){
