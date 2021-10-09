@@ -25,7 +25,7 @@ app.get('/api', (req, res) => {
     endpoints: {
       getUsers : 'https://kodecamp.herokuapp.com/api/users',
       singleUser : 'https://kodecamp.herokuapp.com/api/user/id',
-      addUser : 'https://kodecamp.herokuapp.com/api/user/id',
+      addUser : 'https://kodecamp.herokuapp.com/api/user/',
       updateUser : 'https://kodecamp.herokuapp.com/api/user/id',
       deleteUser : 'https://kodecamp.herokuapp.com/api/user/id',
     }, 
