@@ -35,7 +35,7 @@ https://kodecamp.herokuapp.com/api/user/id
 
 - app.post("/user", addUser)
 
-https://kodecamp.heroku- .com/api/user/
+https://kodecamp.herokuapp.com/api/user/
 
 - app.delete("/user/:id", deleteUser)
 
