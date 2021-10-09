@@ -29,7 +29,6 @@ app.get('/api', (req, res) => {
       updateUser : 'kodecamp.herokuapp.com/api/user/id',
       deleteUser : 'kodecamp.herokuapp.com/api/user/id',
     }, 
-      getUsers : 'kodecamp.herokuapp.com/api/user/id',
     documentation: 'https://github.com/fastbeetech/kodecamp-nodejs'
   })
 })

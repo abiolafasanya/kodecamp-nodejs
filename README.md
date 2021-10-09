@@ -1,7 +1,7 @@
 # kodecamp-nodejs
 > NodeJs Task -- Stage 4
 ## live link
-[live link](kodecamp.herokuapp.com)
+[live link](https://kodecamp.herokuapp.com/api)
 
 ## clone or fork
 
