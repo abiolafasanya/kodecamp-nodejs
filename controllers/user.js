@@ -104,10 +104,11 @@ exports.updateUser = (req, res) => {
     if (user) {
       let index = Users.findIndex((user) => user.id === id);
       let  name, email
+      let pics = req.file === undefined || null ? null : req.file.path 
       name = req.body.name || user.name;
       email = req.body.email || user.email;
       updateId = user.id || req.params.id;
-      let upload = req.file.path || user.photo;
+      let upload = pics || user.photo;
       let updateUser = { id, name, email, upload};
       console.log(updateUser)
       Users.splice(index, 1, updateUser);
