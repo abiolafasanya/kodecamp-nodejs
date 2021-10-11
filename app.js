@@ -16,8 +16,8 @@ app.get('/api', controller.api)
 app.get("/api/users", controller.getUsers)
 
 app.get("/api/user/:id", controller.singleUser)
-
-app.post("/api/user", controller.addUser)
+/* When online this develop error because it will not save file on heroku but works fine on local host */
+app.post("/api/user", upload.single('photo'), controller.addUser)
 
 app.delete("/api/user/:id", controller.deleteUser)
 

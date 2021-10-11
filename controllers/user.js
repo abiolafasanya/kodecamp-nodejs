@@ -1,11 +1,30 @@
 const Users = require("../models/User");
-let port = process.env.PORT || 3000
-exports.index = (req, res) => {
-  console.log("Hello world this is activity nine task");
-  res.json({
-    message: `NODE JS Task running on port ${port} check link below for documentation`,
-    link: `http://localhost:${port}/api`
-  })
+
+exports.index = () => {
+  console.log("Hello world this is abiola fasanya");
+};
+
+exports.profilePics = (req, res) => {
+  try {
+    let id = parseInt(req.params.id);
+    let user = Users.find((user) => {
+      if (user.id === id) return true;
+      else return false;
+    });
+    if(user){
+        console.log(user);
+        user.photo = req.file
+        res.status(200).json({data: user, img: user.photo});
+        console.log(req.file);
+      }
+      else{
+        console.log(user);
+         res.status(400).json({error: 'user not found'})
+        }
+  } catch (err) {
+    res.status(400).send(err.message);
+    console.log(err.message);
+  }
 };
 
 /* Endpoint action functions */
@@ -51,11 +70,12 @@ exports.singleUser = (req, res) => {
 
 exports.addUser = (req, res) => {
   try {
+    let pics = req.file === undefined || null ? null : req.file.path
     let createUser = {
-      id: 1000 + Users.length + 1,
+      id: Users.length + 1,
       name: req.body.name,
       email: req.body.email,
-      photo: null
+      photo: pics
     };
     let newUser = Users.push(createUser);
     if (newUser) {
@@ -83,11 +103,12 @@ exports.updateUser = (req, res) => {
     });
     if (user) {
       let index = Users.findIndex((user) => user.id === id);
-      let  name, email, photo
+      let  name, email
       name = req.body.name || user.name;
       email = req.body.email || user.email;
-      photo = req.file.path || user.photo;
-      let updateUser = { id, name, email, photo};
+      updateId = user.id || req.params.id;
+      let upload = req.file.path || user.photo;
+      let updateUser = { id, name, email, upload};
       console.log(updateUser)
       Users.splice(index, 1, updateUser);
       res.status(201).json({
