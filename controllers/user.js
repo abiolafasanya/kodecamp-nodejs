@@ -72,7 +72,7 @@ exports.addUser = (req, res) => {
   try {
     let pics = req.file === undefined || null ? null : req.file.path
     let createUser = {
-      id: Users.length + 1,
+      id: Users.length + (1000 + 1),
       name: req.body.name,
       email: req.body.email,
       photo: pics
