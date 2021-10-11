@@ -1,7 +1,7 @@
 const Users = require("../models/User");
 
 exports.index = () => {
-  console.log("Hello world this is abiola fasanya");
+  console.log("Hello world this is activity nine task");
 };
 
 /* Endpoint action functions */
@@ -48,9 +48,10 @@ exports.singleUser = (req, res) => {
 exports.addUser = (req, res) => {
   try {
     let createUser = {
-      id: Users.length + 1,
+      id: 1000 + Users.length + 1,
       name: req.body.name,
       email: req.body.email,
+      photo: req.file.path || null
     };
     let newUser = Users.push(createUser);
     if (newUser) {
