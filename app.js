@@ -5,12 +5,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 3000
-
 const controller = require('./controllers/user')
 const {upload} = require('./config/upload')
-/* Api Endpoint*/
+
+/* Api Endpoint not related to task*/
+app.get('/', controller.index)
 app.get('/api', controller.api)
 
+/* Endpoint for get, post, put and delete user */
 app.get("/api/users", controller.getUsers)
 
 app.get("/api/user/:id", controller.singleUser)

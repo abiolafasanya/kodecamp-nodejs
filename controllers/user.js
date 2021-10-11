@@ -1,7 +1,11 @@
 const Users = require("../models/User");
-
-exports.index = () => {
+let port = process.env.PORT || 3000
+exports.index = (req, res) => {
   console.log("Hello world this is activity nine task");
+  res.json({
+    message: `NODE JS Task running on port ${port} check link below for documentation`,
+    link: `http://localhost:${port}/api`
+  })
 };
 
 /* Endpoint action functions */
