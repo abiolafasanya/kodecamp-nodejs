@@ -51,12 +51,11 @@ exports.singleUser = (req, res) => {
 
 exports.addUser = (req, res) => {
   try {
-    let pics = req.file.path === null || undefined ? '' : req.file.path
     let createUser = {
       id: 1000 + Users.length + 1,
       name: req.body.name,
       email: req.body.email,
-      photo: pics || null
+      photo: null
     };
     let newUser = Users.push(createUser);
     if (newUser) {

@@ -16,9 +16,8 @@ app.get('/api', controller.api)
 app.get("/api/users", controller.getUsers)
 
 app.get("/api/user/:id", controller.singleUser)
-/* When online upload.single middleware develops error because it will not save 
-file on heroku server but works perfectly on localhost */
-app.post("/api/user", upload.single('photo'), controller.addUser)
+
+app.post("/api/user", controller.addUser)
 
 app.delete("/api/user/:id", controller.deleteUser)
 
