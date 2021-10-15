@@ -1,9 +1,5 @@
 const Users = require("../models/User");
 
-exports.index = () => {
-  console.log("Hello world this is abiola fasanya");
-};
-
 exports.profilePics = (req, res) => {
   try {
     let id = parseInt(req.params.id);
@@ -102,14 +98,15 @@ exports.updateUser = (req, res) => {
       else return false;
     });
     if (user) {
-      let index = Users.findIndex((user) => user.id === id);
-      let  name, email
-      let pics = req.file === undefined || null ? null : req.file.path 
+      // declaration of variable names to be used
+      let  name, email, pics, upload, updateUser, index
+      index = Users.findIndex((user) => user.id === id);
+      pics = req.file === undefined || null ? null : req.file.path 
       name = req.body.name || user.name;
       email = req.body.email || user.email;
-      updateId = user.id || req.params.id;
-      let upload = pics || user.photo;
-      let updateUser = { id, name, email, upload};
+      upload = pics || user.photo;
+      updateUser = { id, name, email, upload};
+      
       console.log(updateUser)
       Users.splice(index, 1, updateUser);
       res.status(201).json({

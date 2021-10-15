@@ -1,0 +1,112 @@
+:root {
+    --half: 50%;
+}
+body {
+    padding: 0;
+    margin: 0;
+    background: #e3e3e3;
+}
+
+.container {
+    width: 80%;
+    margin: 0px auto;
+}
+
+.card {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 4px 4px 0 #111400;
+    margin: 10px 0;
+    min-width: 250px;
+    padding: 10px;
+    width:var(--half)
+}
+
+.btn-del {
+    text-decoration: none;
+    color: #fff;
+    background: rgb(212, 31, 31);
+    padding: 12px 16px;
+    border-radius: 3px;
+}
+
+.btn-info {
+    text-decoration: none;
+    color: #fff;
+    background: rgb(31, 140, 212);
+    padding: 12px 16px;
+    border-radius: 3px;
+}
+
+.btn-send, .btn-success {
+    text-decoration: none;
+    color: #fff;
+    min-width: 100px;
+    border: none;
+    outline: none;
+    background: rgb(100, 31, 212);
+    padding: 12px 16px;
+    border-radius: 3px;
+}
+.btn-success {
+    background: rgb(31, 212, 76);
+}
+
+.user-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 250px;
+    min-width: 170px;
+    width: 100%;
+    border-radius: 3px;
+    background: #fff;
+    padding: 12px;
+}
+
+.form-group {
+    display: block;
+    width: 100%;
+    line-height: 20px;
+}
+
+#helpId{
+    display: none;
+    visibility: none;
+    margin: 10px 0;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+
+.centralize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.text-center {
+    text-align: center;
+}
+.hidden {
+    display: none;
+    visibility: none;
+}
+.error{
+    color: red;
+    background: rgb(224, 201, 201);
+    border: 1px solid red;
+    padding:10px;
+    text-align: center;
+}
+.success{
+    color: green;
+    background: rgb(212, 241, 218);
+    border: 1px solid green;
+    padding: 10px;
+    text-align: center;
+}
