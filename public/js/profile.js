@@ -20,7 +20,7 @@ fileUpload.addEventListener("change", (e) => {
     console.log('file must be an image')
     return
   }
-  if(file.size >3 *1024 *1024){
+  if(file.size >2 *1024 *1024){
     console.log('file must be less than 2MB')
     return
   }
@@ -45,8 +45,9 @@ fileUpload.addEventListener("change", (e) => {
       console.log(data);
       if (data.ok) {
         console.log(data.ok);
-        console.log(data.data.photo.filename)
-        profileImage.setAttribute('src', `${data.data.photo.filename}`)
+        console.log(data.data.photo.path)
+        // profileImage.setAttribute('src', `${data.data.photo.filename}`)
+        profileImage.src = `${data.data.photo.path}`
         uploadBtn.textContent = "Image uploaded successfully";
         uploadBtn.style.backgroundColor = "rgb(106, 190, 106)";
       } else {

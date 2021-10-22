@@ -42,7 +42,6 @@ registerForm.addEventListener("submit", (e) => {
       const msgAlert = document.createElement("div");
       if (data.ok) {
         console.log(data.ok, data.message);
-        console.log(data.user);
         let msg = document.createTextNode(data.message);
         msgAlert.appendChild(msg);
         msgAlert.classList.add("success");
