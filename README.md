@@ -19,6 +19,9 @@
 ```bash
     npm run start
 ```
+## Authorization
+>Bearer {Token}
+
 
 ## Also available to test on herokuApp
 
