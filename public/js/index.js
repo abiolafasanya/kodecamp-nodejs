@@ -3,6 +3,7 @@ let username = document.querySelector("#username");
 let email = document.querySelector("#email");
 let message = document.querySelector("#message");
 let contactArea = document.querySelector(".card");
+let userCard = document.querySelector(".container")
 
 contact.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -71,23 +72,36 @@ contact.addEventListener("submit", (e) => {
     });
 });
 
-// if (
-//   (username.value === "" || username.value === null) &&
-//   (email.value === "" || email.value === null) &&
-//   (message.value === "" || message.value === null)
-// ) {
-//   console.log("form values are empty");
-//   msgAlert.appendChild(empty);
-//   msgAlert.classList.add("error");
-//   contactArea.insertBefore(msgAlert, contact);
-//   setTimeout(() => {
-//     msgAlert.classList.add("hidden");
-//   }, 6000);
+window.addEventListener('load', (e) => {
+  console.log('page loaded')
+  fetch("/api/users", {
+    method: "GET",
+    //   credentials: "same-origin",
+    headers: {
+      "Accept": "application/json",
+    },
+  })
+    .then((res) => {
+      console.log(res);
+      return res.json();
+    })
+    .then((data) => {
+      console.log(data.data)
+      let users = data.data
+      users.forEach(user => {
+       let list =  `
+          <div class="user-box">
+          <img class="card-img" src="https://via.placeholder.com/150/000000/FFFFFF/?text=IPaddress.net" alt="">
+          <div class="card-body">
+            <h4 class="card-title">${user.name}</h4>
+            <p class="card-text">
+              <a href="" class="btn-info">Edit</a>
+              <a href="" class="btn-del">Delete</a>
+            </p>
+          </div>        
+        `
+        userCard.innerHTML = list;
+      })
 
-//   email.value = "";
-//   message.value = "";
-//   document.querySelector("#btn").classList.add("bg-green");
-//   document.querySelector("#btn").innerHTML = "Submit";
-
-//   return;
-// }
+    })
+});

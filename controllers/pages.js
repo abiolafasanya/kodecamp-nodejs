@@ -6,6 +6,21 @@ exports.index = (req, res) => {
   console.log("Hello world this is abiola fasanya");
 };
 
+exports.upload = (req, res) => {
+  console.log("Profile Upload page");
+  res.sendFile(path.resolve("./views/profile.html"));
+};
+
+exports.signUp = (req, res) => {
+  console.log("SignUp page");
+  res.sendFile(path.resolve("./views/register.html"));
+};
+
+exports.signIn = (req, res) => {
+  console.log("SignIn page");
+  res.sendFile(path.resolve("./views/login.html"));
+};
+
 exports.processContact = (req, res) => {
   console.log("Hello world this success page");
   const { name, email, message } = req.body;

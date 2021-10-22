@@ -1,4 +1,11 @@
+require("dotenv").config();
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { SECRET } = process.env;
 const Users = require("../models/User");
+const path = require("path");
+const fs = require("fs");
+const joi = require("joi");
 
 exports.profilePics = (req, res) => {
   try {
@@ -7,21 +14,33 @@ exports.profilePics = (req, res) => {
       if (user.id === id) return true;
       else return false;
     });
-    if(user){
-        console.log(user);
-        user.photo = req.file
-        res.status(200).json({data: user, img: user.photo});
-        console.log(req.file);
-      }
-      else{
-        console.log(user);
-         res.status(400).json({error: 'user not found'})
-        }
+    if (user) {
+      console.log(user);
+      console.log(req.file, "resykt")
+      user.photo = req.file;
+      res.status(200).json({
+        ok: true,
+        data: user,
+        img: user.photo,
+      });
+      console.log(req.file);
+    } else {
+      console.log(user);
+      res.status(400).json({
+        ok: false,
+        error: "user not found",
+      });
+    }
   } catch (err) {
-    res.status(400).send(err.message);
+    res.status(400).json({ error: err.message });
     console.log(err.message);
   }
 };
+
+exports.info = (req, res) => {
+  let profile = require('../models/profile')
+  res.status(200).json({ ok: true,  profile});
+}
 
 /* Endpoint action functions */
 exports.getUsers = (req, res) => {
@@ -66,12 +85,12 @@ exports.singleUser = (req, res) => {
 
 exports.addUser = (req, res) => {
   try {
-    let pics = req.file === undefined || null ? null : req.file.path
+    let pics = req.file === undefined || null ? null : req.file.path;
     let createUser = {
       id: Users.length + (1000 + 1),
       name: req.body.name,
       email: req.body.email,
-      photo: pics
+      photo: pics,
     };
     let newUser = Users.push(createUser);
     if (newUser) {
@@ -99,25 +118,26 @@ exports.updateUser = (req, res) => {
     });
     if (user) {
       // declaration of variable names to be used
-      let  name, email, pics, upload, updateUser, index
+      console.log(req.body, req.file)
+      let name, email, pics, photo, updateUser, index;
       index = Users.findIndex((user) => user.id === id);
-      pics = req.file === undefined || null ? null : req.file.path 
+      pics = req.file === undefined || null ? null : req.file;
       name = req.body.name || user.name;
       email = req.body.email || user.email;
-      upload = pics || user.photo;
-      updateUser = { id, name, email, upload};
-      
-      console.log(updateUser)
+      photo = pics || user.photo;
+      updateUser = { id, name, email, photo };
+
+      console.log(updateUser);
       Users.splice(index, 1, updateUser);
       res.status(201).json({
-        status: 201,
+        ok: true,
         data: updateUser,
-        message: `User with id ${user.id} updated`,
+        message: `User profile updated`,
       });
     } else {
       res.status(404).json({
-        status: [404, false],
-        error: `User does with this ID: ${req.params.id} does not exist`,
+        ok: false,
+        message: `User update failed`,
       });
     }
   } catch (err) {

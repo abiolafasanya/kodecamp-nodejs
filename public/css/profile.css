@@ -1,0 +1,153 @@
+:root {
+    --success-upload: rgb(106, 190, 106);
+    --error-upload: rgb(241, 98, 98);
+}
+body {
+    margin: 0px;
+    padding: 0px;
+    /* background: #f2f2f2; */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+    background: rgb(247, 239, 247);
+}
+nav ul {
+    display: flex;
+    list-style: none;
+    flex: 2;
+    align-items: center;
+    justify-content: center;
+}
+nav ul li a{
+    padding: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: purple;
+    font-weight: bold;
+
+}
+nav h1 {
+    color: rgb(80, 4, 80);
+}
+
+#profile-section {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 8;
+    margin-top: 50px;
+    width: 100%;
+    /* align-items: center; */
+}
+
+#profile-section aside {
+    padding: 0 3rem;
+}
+
+.profile-img {
+    max-width: 250px;
+}
+.pics {
+    width: 100%;
+    max-height: 250px;
+    max-width: 200px;
+    height: 150px;
+    border: 1px solid #cecece;
+    padding: 3px;
+}
+.info-group div{
+    font-weight: bold;
+    padding: 10px 0;
+    font-size: 1rem;
+}
+.info-group a{
+    display: block;
+    padding: 5px 0;
+    max-width: 150px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-data{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+.profile-data .detail-group1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.group-1{
+    width: 100%;
+}
+.container {
+    display: grid;
+    grid-template-columns:1fr;
+}
+.line-break {
+    border: 1px solid rgba(46, 40, 46, 0.603);
+    max-width: 100%;
+    width: 100%;
+}
+
+.profile-update {
+    width: 75%;
+    padding: 0;
+    margin: 0;
+}
+.group-2{
+    display: flex;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+.form {
+    margin: 15px 0;
+}
+.form-control, .form-group {
+    display: block;
+
+}
+.form-control {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    outline: 0;
+    border: none;
+    /* border-bottom: 1px solid purple; */
+}
+.btn-password {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 50px 0 5px;
+    box-sizing: border-box;
+    background: rgb(80, 4, 80);
+    border: 1px purple;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.upload-btn {
+    background: rgb(36, 35, 35);
+    color: #fff;
+    padding: 10px;
+    max-width: 90%;
+    outline: 0;
+    border: 0;
+    width: 100%;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+}
+.upload-btn input {
+    visibility: none;
+    display: none;
+}

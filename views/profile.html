@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/profile.css" />
+    <title>User Profile</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1>Fastbeetech</h1>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section id="profile-section">
+        <aside>
+          <div class="title">
+            <h2>Profile</h2>
+          </div>
+          <div class="profile-img">
+            <img
+              src="/uploads/photo-92055329-ce9c-4d35-a178-d391a7d670e2IMG_20170625_065804.jpg"
+              alt=" "
+              srcset=""
+              class="pics"
+              />
+            <button class="upload-btn">
+            <input type="file" name="photo" class="upload" id="photo" hidden/>
+            Upload Image
+            </button>
+            <p class="upload_progress" hidden> Error uploading image</p>
+        </div>
+          <div class="info">
+            <div class="info-group">
+              <div>Last Updated</div>
+              <time datetime="2021-10-19">18, october 2021 at 3:25pm</time>
+            </div>
+            <div class="info-group">
+              <div>Account ID</div>
+              <span>asdfg-gjhjg-09965</span>
+            </div>
+            <div class="info-group">
+                <div>Profile ID</div>
+                <span>asdfg-gjhjg-09965</span>
+            </div>
+            <div class="info-group">
+                <div>Account</div>
+              <a href="#logout">Logout</a>
+              <a href="#delete">Delete</a>
+            </div>
+          </div>
+        </aside>
+        <!-- Profile data area -- main section -->
+        <main>
+          <div class="container">
+            <div class="profile-data">
+              <div class="detail-group1">
+                <div class="group-1">
+                  <h3>Name</h3>
+                  <div id="username">Abiola Fasanya</div>
+                </div>
+                <div class="group-1">
+                  <h3>Email</h3>
+                  <div id="email">harbiola78@gmail.com</div>
+                </div>
+              </div>
+              <div class="detail-group1">
+                <div class="group-1">
+                  <h3>Phone</h3>
+                  <div id="phone">+2348102307473</div>
+                </div>
+                <div class="group-1">
+                  <h3>Occupation</h3>
+                  <div id="occupation">Software Developer</div>
+                </div>
+              </div>
+              <div class="detail-group1">
+                <div class="group-1">
+                  <h3>Location</h3>
+                  <div id="location">Lagos</div>
+                </div>
+                <div class="group-1">
+                  <h3>Address</h3>
+                  <div id="address">14, Fawole Street, along bayeku road, ikorodu, Lagos</div>
+                </div>
+              </div>
+              
+            </div>
+            
+            <div class="profile-update">
+              <div class="detail-group2">
+                <div class="group-2">
+                  <span> Secured Area </span>
+                  <span> Change </span>
+                </div>
+                <!-- <div class="line-break"></div> -->
+                <hr>
+                <div class="form">
+                  <form enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="">Password</label>
+                      <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        value="mypassword isvery long"
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <button class="btn-password">Update Profile</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </section>
+    </main>
+    <footer></footer>
+    <script src="/js/profile.js"></script>
+  </body>
+</html>
