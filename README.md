@@ -25,21 +25,37 @@
 
 ## Also available to test on herokuApp
 
-### Api Endpoint
-> Base Url: kodecamp.herokuapp.com
-
-- app.get("/users",auth, getUsers)
-
+## Task for Authentication and Authorization Endpoints
+> Register, Login and Profile are all POST method
+### Register
 - Register
 > POST 
 > http://localhost:3000/register
+### Login
 - login
 > POST 
 > http://localhost:3000/login
+### Profile
+> Requires Authentication [bearer token]
 - Profile
 > GET
 > http://localhost:3000/user/profile
 
+## For front End Preview and Testing
+>Methods here is GET method
+### SignIn Page
+> http://localhost:3000/signin
+
+### SignUP Page
+> http://localhost:3000/signup
+
+### Profile Page
+> http://localhost:3000/profile
+
+### Api Endpoint
+> Base Url: kodecamp.herokuapp.com
+
+- app.get("/users",auth, getUsers)
 
 https://kodecamp.herokuapp.com/api/users
 

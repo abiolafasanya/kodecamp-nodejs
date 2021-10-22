@@ -19,10 +19,14 @@ const pagesController = require('./controllers/pages')
 const auth = require('./middleware/auth')
 const {upload} = require('./utils/upload')
 
+
 app.get('/api', controller.api)
 /* Login and register route */
 app.post("/login", authController.login)
 app.post("/register", authController.register)
+
+/* mail */
+
 
 /*Endpoints for pages*/
 app.get('/', pagesController.index)

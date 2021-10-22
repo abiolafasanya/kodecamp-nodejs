@@ -8,6 +8,8 @@ const joi = require("joi");
 const { v4: uuid } = require("uuid");
 const cred = [];
 let userProfile = require("../models/profile");
+const { sendEmail } = require("../service/mail");
+console.log(sendEmail);
 
 exports.register = async (req, res) => {
   const objSchema = joi.object({
@@ -23,7 +25,14 @@ exports.register = async (req, res) => {
     let data = await objSchema.validateAsync(req.body);
     let { name, email, password } = data;
     password = await bcrypt.hash(password, 10);
-    let user = { id: uuid(), name, email, password };
+    let user = {
+      id: uuid(),
+      name,
+      email,
+      password,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
     cred.push(user);
     let profile = {
       ...user,
@@ -32,9 +41,23 @@ exports.register = async (req, res) => {
       active: false,
       photo: null,
     };
-    console.log("profile", profile);
+    // console.log("profile", profile);
     userProfile.push(profile);
-    console.log(user);
+    // console.log(user);
+    const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: 86400 });
+    sendEmail({
+      email: user.email,
+      subject: "verify your account",
+      body: `
+        <h1>Hello ${user.name}</h1> 
+        <p>
+          Please click on the verification link below to activaate your account
+          <br>
+          <a href="/verify-account/?secure="/${token}>Click to verify</a>
+        </p>
+      `,
+      name: user.name,
+    });
     res
       .status(201)
       .json({ ok: true, profile, message: "User Registration Successful" });
