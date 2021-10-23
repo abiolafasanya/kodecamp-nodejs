@@ -9,7 +9,7 @@ const { v4: uuid } = require("uuid");
 const {Users} = require('../models/User');
 let userProfile = require("../models/profile");
 const sendEmail = require("../service/mail");
-console.log(Users);
+// console.log(Users);
 
 exports.register = async (req, res) => {
   const objSchema = joi.object({
@@ -43,6 +43,7 @@ exports.register = async (req, res) => {
     };
     // console.log("profile", profile);
     Users.push(profile);
+    userProfile.push(profile);
     // console.log(user);
     const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: 86400 });
     let to, subject, body

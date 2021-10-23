@@ -1,12 +1,5 @@
-require("dotenv").config();
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { SECRET } = process.env;
-const {Users} = require("../models/User");
-const path = require("path");
-const fs = require("fs");
-const joi = require("joi");
-
+const { Users } = require("../models/User");
+const profile  = require("../models/profile");
 exports.profilePics = (req, res) => {
   try {
     let id = req.params.id;
@@ -16,7 +9,7 @@ exports.profilePics = (req, res) => {
     });
     if (user) {
       console.log(user);
-      console.log(req.file, "resykt")
+      console.log(req.file, "resykt");
       user.photo = req.file;
       res.status(200).json({
         ok: true,
@@ -38,9 +31,18 @@ exports.profilePics = (req, res) => {
 };
 
 exports.info = (req, res) => {
-  let profile = require('../models/profile')
-  res.status(200).json({ ok: true,  profile});
-}
+  console.log(profile);
+  profile.find(user => {
+   let userProfile = {
+      name: user.name,
+      id: user.id,
+      email: user.email,
+      createdAt: user.createdAt,
+      address: user.address,
+    }
+    res.status(200).json({ ok: true, user: userProfile });
+  })
+};
 
 /* Endpoint action functions */
 exports.getUsers = (req, res) => {
@@ -118,7 +120,7 @@ exports.updateUser = (req, res) => {
     });
     if (user) {
       // declaration of variable names to be used
-      console.log(req.body, req.file)
+      console.log(req.body, req.file);
       let name, email, pics, photo, updateUser, index;
       index = Users.findIndex((user) => user.id === id);
       pics = req.file === undefined || null ? null : req.file;
