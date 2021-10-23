@@ -1,6 +1,7 @@
 require("dotenv").config();
-const nodemailer = require('nodemailer')
 const { SMTP_EMAIL, SMTP_PASSWORD } = process.env;
+const nodemailer = require('nodemailer')
+
 const transporter = nodemailer.createTransport({
     port: 587,     
     host: "smtp.gmail.com",
@@ -11,16 +12,23 @@ const transporter = nodemailer.createTransport({
         },
     });
 
-exports.sendEmail =  (object) => {
+module.exports = (to, subject, body) => {
+
     const mailData = {
-        from: `"Fastbeetech" <harbiola78@gmail.com>`,  // sender address
-        to: object.email, // recipient address// list of receivers
-        subject: object.subject,
-        body: object.body,
+        from: `"Fastbeetech" <${SMTP_EMAIL}>`,  // sender address
+        to: to, // recipient address// list of receivers
+        subject: subject,
+        html: body,
     };
 
     transporter.sendMail(mailData, function(err, info) {
-        if(err) return console.log({message: 'message not sent', error:  err.message})
-        else return console.log({message:"Email sent to ", messageID: info.messageId})
+        if(err) {
+            console.log({message: 'message not sent', error:  err.message})
+            console.log(err)
+        }
+        else {
+            console.log({message:"Email sent to ", messageID: info.messageId})
+        }
+        
      })
     }

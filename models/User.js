@@ -71,7 +71,7 @@ const Users = [
   },
 ];
 
-module.exports = Users;
+// module.exports = Users;
 
-const cred = []
-exports = cred
+// const cred = []
+exports.Users = Users

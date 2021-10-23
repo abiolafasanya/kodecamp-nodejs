@@ -6,10 +6,10 @@ const path = require("path");
 const fs = require("fs");
 const joi = require("joi");
 const { v4: uuid } = require("uuid");
-const cred = [];
+const {Users} = require('../models/User');
 let userProfile = require("../models/profile");
-const { sendEmail } = require("../service/mail");
-console.log(sendEmail);
+const sendEmail = require("../service/mail");
+console.log(Users);
 
 exports.register = async (req, res) => {
   const objSchema = joi.object({
@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    cred.push(user);
+    Users.push(user);
     let profile = {
       ...user,
       address: null,
@@ -42,13 +42,13 @@ exports.register = async (req, res) => {
       photo: null,
     };
     // console.log("profile", profile);
-    userProfile.push(profile);
+    Users.push(profile);
     // console.log(user);
     const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: 86400 });
-    sendEmail({
-      email: user.email,
-      subject: "verify your account",
-      body: `
+    let to, subject, body
+    to = email,
+    subject= "verify your account",
+    body= `
         <h1>Hello ${user.name}</h1> 
         <p>
           Please click on the verification link below to activaate your account
@@ -56,8 +56,7 @@ exports.register = async (req, res) => {
           <a href="/verify-account/?secure="/${token}>Click to verify</a>
         </p>
       `,
-      name: user.name,
-    });
+    sendEmail(to, subject, body);
     res
       .status(201)
       .json({ ok: true, profile, message: "User Registration Successful" });
@@ -74,34 +73,39 @@ exports.login = async (req, res) => {
 
   try {
     let data = await objSchema.validateAsync(req.body);
+    console.log(data);
     let { email, password } = data;
-    console.log(cred);
-    cred.find((user) => {
-      if (user.email !== email) {
-        return res
-          .status(404)
-          .json({ ok: false, message: "Incorrect Email, user not found" });
-      }
-      let isPassword = bcrypt.compareSync(password, user.password);
-      if (!isPassword) {
-        console.log(false, "failed");
-        return res
-          .status(400)
-          .json({ ok: false, message: "User Login failed" });
-      }
-      console.log(true);
-      const payload = {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      };
-      const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
-      return res.status(200).json({
-        ok: true,
-        message: "User loggedIn",
-        token,
-      });
+    let user = Users.find((user) => {
+      if (user.email === email) return true;
+      else return false;
     });
+    if(user){
+        console.log(user)
+        let isPassword = bcrypt.compareSync(password, user.password);
+        if (!isPassword) {
+          console.log(false, "failed");
+          return res
+          .status(400)
+          .json({ ok: false, message: "Incorrect Password, User Login failed" });
+        }
+        console.log("password: %d", true);
+        const payload = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
+        const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
+        return res.status(200).json({
+          ok: true,
+          message: "User loggedIn",
+          token,
+        });
+    }
+    else{
+        res
+        .status(404)
+        .json({ ok: false, message: "Incorrect Email, user not found" });
+    }
   } catch (err) {
     res.status(422).json({ ok: false, message: err.details[0].message });
   }
