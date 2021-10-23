@@ -24,13 +24,13 @@ app.get('/api', controller.api)
 /* Login and register route */
 app.post("/login", authController.login)
 app.post("/register", authController.register)
+app.get('/profile',auth, controller.info) // get user info
 
 /* mail */
 
 
 /*Endpoints for pages*/
 app.get('/', pagesController.index)
-app.get('/profile',auth, controller.info)
 app.get('/user/profile', auth, pagesController.upload)
 app.get('/signin', pagesController.signIn)
 app.get('/signup', pagesController.signUp)
