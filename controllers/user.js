@@ -2,7 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
-const Users = require("../models/User");
+const {Users} = require("../models/User");
 const path = require("path");
 const fs = require("fs");
 const joi = require("joi");
@@ -62,7 +62,7 @@ exports.getUsers = (req, res) => {
 
 exports.singleUser = (req, res) => {
   try {
-    let id = parseInt(req.params.id);
+    let id = req.params.id;
     let user = Users.find((user) => {
       if (user.id === id) return true;
       else return false;
@@ -111,7 +111,7 @@ exports.addUser = (req, res) => {
 
 exports.updateUser = (req, res) => {
   try {
-    let id = parseInt(req.params.id);
+    let id = req.params.id;
     let user = Users.find((user) => {
       if (user.id === id) return true;
       else return false;
