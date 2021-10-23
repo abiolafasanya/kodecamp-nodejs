@@ -9,7 +9,7 @@ const joi = require("joi");
 
 exports.profilePics = (req, res) => {
   try {
-    let id = parseInt(req.params.id);
+    let id = req.params.id;
     let user = Users.find((user) => {
       if (user.id === id) return true;
       else return false;
@@ -149,7 +149,7 @@ exports.updateUser = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-  let ID = parseInt(req.params.id);
+  let ID = req.params.id;
   try {
     let CheckUser = Users.find((user) => {
       if (user.id === ID) return true;
