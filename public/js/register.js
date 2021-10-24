@@ -10,15 +10,7 @@ registerForm.addEventListener("submit", (e) => {
   email = e.target.email.value;
   password = e.target.password.value;
   cpassword = e.target.cpassword.value;
-  // console.log({name, email, password, cpassword})
-
-  // const formData = new FormData();
-  // formData.append("name", name);
-  // formData.append("email", email);
-  // formData.append("password", password);
-  // formData.append("cpassword", cpassword);
-  // console.log(formData)
-
+  
   const formData = {
     name,
     email,

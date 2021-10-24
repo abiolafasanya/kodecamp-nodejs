@@ -6,10 +6,9 @@ const path = require("path");
 const fs = require("fs");
 const joi = require("joi");
 const { v4: uuid } = require("uuid");
-const {Users} = require('../models/User');
+const { Users } = require("../models/User");
 let userProfile = require("../models/profile");
-const sendEmail = require("../service/mail");
-// console.log(Users);
+const mailService = require("../service/mail");
 
 exports.register = async (req, res) => {
   const objSchema = joi.object({
@@ -29,6 +28,7 @@ exports.register = async (req, res) => {
       id: uuid(),
       name,
       email,
+      status: 'pending',
       password,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -37,27 +37,26 @@ exports.register = async (req, res) => {
     let profile = {
       ...user,
       address: null,
-      phone: null,
-      active: false,
+      phone: '+2348102307473',
       photo: null,
     };
     // console.log("profile", profile);
     Users.push(profile);
     userProfile.push(profile);
     // console.log(user);
-    const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: 86400 });
-    let to, subject, body
-    to = email,
-    subject= "verify your account",
-    body= `
-        <h1>Hello ${user.name}</h1> 
+    const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: '1h' });
+      mailService.sendEmail({ 
+        email: data.email,
+        subject: "Verify your account",
+        body: `
+        <h3>Hi, ${data.name}</h3> 
         <p>
           Please click on the verification link below to activaate your account
           <br>
-          <a href="/verify-account/?secure="/${token}>Click to verify</a>
+          <a href="http://localhost:3000/verify-account/?secure="/${token}>Click to verify</a>
         </p>
-      `,
-    sendEmail(to, subject, body);
+      `
+       });
     res
       .status(201)
       .json({ ok: true, profile, message: "User Registration Successful" });
@@ -80,30 +79,32 @@ exports.login = async (req, res) => {
       if (user.email === email) return true;
       else return false;
     });
-    if(user){
-        console.log(user)
-        let isPassword = bcrypt.compareSync(password, user.password);
-        if (!isPassword) {
-          console.log(false, "failed");
-          return res
+    if (user) {
+      console.log(user);
+      let isPassword = bcrypt.compareSync(password, user.password);
+      if (!isPassword) {
+        console.log(false, "failed");
+        return res
           .status(400)
-          .json({ ok: false, message: "Incorrect Password, User Login failed" });
-        }
-        console.log("password: %d", true);
-        const payload = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        };
-        const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
-        return res.status(200).json({
-          ok: true,
-          message: "User loggedIn",
-          token,
-        });
-    }
-    else{
-        res
+          .json({
+            ok: false,
+            message: "Incorrect Password, User Login failed",
+          });
+      }
+      console.log("password: %d", true);
+      const payload = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      };
+      const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
+      return res.status(200).json({
+        ok: true,
+        message: "User loggedIn",
+        token,
+      });
+    } else {
+      res
         .status(404)
         .json({ ok: false, message: "Incorrect Email, user not found" });
     }
