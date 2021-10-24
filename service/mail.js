@@ -13,14 +13,14 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.sendEmail = (object) => {
-  const mailData = {
+  const mailOptions = {
     from: `"Fastbeetech" <${SMTP_EMAIL}>`, // sender address
     to: object.email, // recipient address// list of receivers
     subject: object.subject,
     html: `${object.body}`,
   };
 
-  transporter.sendMail(mailData, (err, info) => {
+  transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       console.log({ message: "message not sent", error: err.message });
     } else {
