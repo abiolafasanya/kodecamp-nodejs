@@ -29,20 +29,20 @@ exports.register = async (req, res) => {
       name,
       email,
       status: "pending",
-      accountID: uuid(),
-      profileID: uuid(),
+      accountId: uuid(),
+      profileId: uuid(),
       password,
-      createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
     Users.push(user);
-    let profile = {
+    const profile = {
       ...user,
-      address: null,
+      address: 'fawole street',
       location: 'lagos',
       phone: "+2348102307473",
       photo: null,
-      occupation: 'Electrical Engineer/Software Developer'
+      occupation: 'Electrical Engineer/Software Developer',
     };
     // console.log("profile", profile);
     Users.push(profile);
