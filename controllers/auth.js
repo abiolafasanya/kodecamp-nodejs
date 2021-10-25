@@ -123,5 +123,47 @@ exports.verify = async (req, res) => {
   console.log('Account verified')
   let token = req.query.token
   console.log(token)
-  res.status(200).json(token)
+  try {
+    await jwt.verify(token, SECRET, (err, user) => {
+      if (err) {
+        res.status(403).json({
+          status: 403,
+          message: "Token is not valid",
+        });
+        return;
+      }
+      let id = user.id;
+    let activateUser = Users.find((user) => {
+      if (user.id === id) return true;
+      else return false;
+    });
+    if (activateUser){
+      let index, status, updatedAt
+      index = Users.findIndex((user) => user.id === id);
+      status = 'active'
+      updatedAt = new Date().toISOString()
+      activateAt = new Date().toISOString()
+      activate = {status, updatedAt, activatedAt}
+      Users.splice(index, 1, activate)
+
+      mailService.sendEmail({
+        email: data.email,
+        subject: "Account Activated",
+        body: `
+          <h3>Hi, ${data.name}</h3> 
+          <p>
+            This is to notify you that your account ahas been activated
+            <br>
+            <a href="${Url}/user/profile">View your Profile</a>
+          </p>
+        `,
+      });
+      res.status(200).json({ok: true, message: 'account activated'});
+    }
+    else res.status(200).json({ok: false, message: 'activation failed'});
+      // end
+    });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
 }
