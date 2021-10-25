@@ -138,7 +138,7 @@ exports.verify = async (req, res) => {
       else return false;
     });
     if (activateUser){
-      let index, status, updatedAt, activateAt
+      let index, status, updatedAt, activateAt, activate
       index = Users.findIndex((user) => user.id === id);
       status = 'active'
       updatedAt = new Date().toISOString()
