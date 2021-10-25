@@ -54,6 +54,7 @@ exports.register = async (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
+      Url: Url
     };
     const token = jwt.sign(payload, SECRET, { expiresIn: "1h" });
     
@@ -140,6 +141,7 @@ exports.verify = async (req, res) => {
       let id = user.id;
       let email = user.email
       let name = user.name
+      let Url = user.Url
     let activateUser = Users.find((user) => {
       if (user.id === id) return true;
       else return false;
