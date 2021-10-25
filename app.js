@@ -25,6 +25,7 @@ app.get('/api', controller.api)
 app.post("/login", authController.login)
 app.post("/register", authController.register)
 app.get('/profile',auth, controller.info) // get user info
+app.get('/user/verify', authController.verify)
 
 /* mail */
 

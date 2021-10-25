@@ -90,11 +90,14 @@ window.addEventListener("load", () => {
         console.log(data.user.name)
         document.querySelector("#username").innerHTML = data.user.name;
         document.querySelector("#email").innerHTML = data.user.email;
+        document.querySelector("#updated_at").innerHTML = data.user.updatedAT;
+        document.querySelector("#status").innerHTML = data.user.status;
+        document.querySelector("#profile_id").innerHTML = data.user.profileID;
+        document.querySelector("#accouont_id").innerHTML = data.user.accountID;
         document.querySelector("#address").innerHTML = data.user.address;
         document.querySelector("#phone").innerHTML = data.user.phone;
         document.querySelector("#location").innerHTML = data.user.location;
-        document.querySelector("#occupation").innerHTML =
-          data.user.occupation;
+        document.querySelector("#occupation").innerHTML = data.user.occupation;
         document.querySelector(".pics").src = `uploads/${data.user.photo}`;
         console.log(data.user);
       } else {

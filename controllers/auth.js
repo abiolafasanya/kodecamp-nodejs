@@ -39,8 +39,10 @@ exports.register = async (req, res) => {
     let profile = {
       ...user,
       address: null,
+      location: 'lagos',
       phone: "+2348102307473",
       photo: null,
+      occupation: 'Electrical Engineer/Software Developer'
     };
     // console.log("profile", profile);
     Users.push(profile);
@@ -48,6 +50,7 @@ exports.register = async (req, res) => {
     // console.log(user);
     const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
     const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: "1h" });
+    
     mailService.sendEmail({
       email: data.email,
       subject: "Verify your account",
@@ -60,6 +63,7 @@ exports.register = async (req, res) => {
         </p>
       `,
     });
+
     res
       .status(201)
       .json({ ok: true, profile, message: "User Registration Successful" });
@@ -113,3 +117,9 @@ exports.login = async (req, res) => {
     res.status(422).json({ ok: false, message: err.details[0].message });
   }
 };
+
+exports.verify = async (req, res) => {
+  console.log('Account verified')
+  let token = req.query.secure
+  console.log(token)
+}
