@@ -124,7 +124,7 @@ exports.verify = async (req, res) => {
   let token = req.query.token
   console.log(token)
   try {
-    await jwt.verify(token, SECRET, (err, user) => {
+     jwt.verify(token, SECRET, (err, user) => {
       if (err) {
         res.status(403).json({
           status: 403,
@@ -138,7 +138,7 @@ exports.verify = async (req, res) => {
       else return false;
     });
     if (activateUser){
-      let index, status, updatedAt
+      let index, status, updatedAt, activateAt
       index = Users.findIndex((user) => user.id === id);
       status = 'active'
       updatedAt = new Date().toISOString()
