@@ -37,13 +37,15 @@ exports.info = (req, res) => {
       name: user.name,
       id: user.id,
       email: user.email,
-      createdAt: user.createdAt,
+      accountId: user.accountId,
+      profileId:user.profileId,
       address: user.address,
       status: user.status,
       phone: user.phone,
       location: user.location,
       updatedAt: user.updatedAt,
-      photo: user.photo
+      photo: user.photo,
+      occupation: user.occupation,
     }
     res.status(200).json({ ok: true, user: userProfile });
   })
