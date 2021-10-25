@@ -35,14 +35,25 @@ exports.register = async (req, res) => {
       updatedAt: new Date().toISOString(),
       createdAt: new Date().toISOString(),
     };
+    // check if user exists
+    let ifEmailExists = Users.find((user) => {
+      if (user.email === data.email) return true;
+      else return false;
+    });
+    // end of checking
+    if (ifEmailExists)
+      return res.status(400).json({
+        message: "Email already taken",
+      });
+
     Users.push(user);
     const profile = {
       ...user,
-      address: 'fawole street',
-      location: 'lagos',
+      address: "fawole street",
+      location: "lagos",
       phone: "+2348102307473",
       photo: null,
-      occupation: 'Electrical Engineer/Software Developer',
+      occupation: "Electrical Engineer/Software Developer",
     };
     // console.log("profile", profile);
     Users.push(profile);
@@ -54,10 +65,10 @@ exports.register = async (req, res) => {
       id: user.id,
       name: user.name,
       email: user.email,
-      Url: Url
+      Url: Url,
     };
     const token = jwt.sign(payload, SECRET, { expiresIn: "1h" });
-    
+
     mailService.sendEmail({
       email: data.email,
       subject: "Verify your account",
@@ -126,11 +137,11 @@ exports.login = async (req, res) => {
 };
 
 exports.verify = async (req, res) => {
-  console.log('Account verified')
-  let token = req.query.token
-  console.log(token)
+  console.log("Account verified");
+  let token = req.query.token;
+  console.log(token);
   try {
-     jwt.verify(token, SECRET, (err, user) => {
+    jwt.verify(token, SECRET, (err, user) => {
       if (err) {
         res.status(403).json({
           status: 403,
@@ -139,26 +150,26 @@ exports.verify = async (req, res) => {
         return;
       }
       let id = user.id;
-      let email = user.email
-      let name = user.name
-      let Url = user.Url
-    let activateUser = Users.find((user) => {
-      if (user.id === id) return true;
-      else return false;
-    });
-    if (activateUser){
-      let index, status, updatedAt, activateAt, activate
-      index = Users.findIndex((user) => user.id === id);
-      status = 'active'
-      updatedAt = new Date().toISOString()
-      activateAt = new Date().toISOString()
-      activate = {status, updatedAt, activateAt}
-      Users.splice(index, 1, activate)
+      let email = user.email;
+      let name = user.name;
+      let Url = user.Url;
+      let activateUser = Users.find((user) => {
+        if (user.id === id) return true;
+        else return false;
+      });
+      if (activateUser) {
+        let index, status, updatedAt, activateAt, activate;
+        index = Users.findIndex((user) => user.id === id);
+        status = "active";
+        updatedAt = new Date().toISOString();
+        activateAt = new Date().toISOString();
+        activate = { status, updatedAt, activateAt };
+        Users.splice(index, 1, activate);
 
-      mailService.sendEmail({
-        email: email,
-        subject: "Account Activated",
-        body: `
+        mailService.sendEmail({
+          email: email,
+          subject: "Account Activated",
+          body: `
           <h3>Hi, ${name}</h3> 
           <p>
             This is to notify you that your account ahas been activated
@@ -166,13 +177,12 @@ exports.verify = async (req, res) => {
             <a href="${Url}/user/profile">View your Profile</a>
           </p>
         `,
-      });
-      res.status(200).json({ok: true, message: 'account activated'});
-    }
-    else res.status(200).json({ok: false, message: 'activation failed'});
+        });
+        res.status(200).json({ ok: true, message: "account activated" });
+      } else res.status(200).json({ ok: false, message: "activation failed" });
       // end
     });
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
-}
+};

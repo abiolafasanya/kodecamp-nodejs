@@ -44,7 +44,6 @@ exports.info = (req, res) => {
       location: user.location,
       updatedAt: user.updatedAt,
       photo: user.photo
-
     }
     res.status(200).json({ ok: true, user: userProfile });
   })
@@ -100,6 +99,17 @@ exports.addUser = (req, res) => {
       email: req.body.email,
       photo: pics,
     };
+
+    // check if user exists 
+    let ifEmailExists = Users.find(user => {
+      if(user.email === createUser.email) return true
+      else return false
+    })
+  // end of checking
+  if (ifEmailExists) return res.status(400).json({
+    message: 'Email already taken'
+  })
+
     let newUser = Users.push(createUser);
     if (newUser) {
       res.status(201).json({
