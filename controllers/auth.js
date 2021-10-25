@@ -48,7 +48,8 @@ exports.register = async (req, res) => {
     Users.push(profile);
     userProfile.push(profile);
     // console.log(user);
-    const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+    // const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+    const Url = req.protocol + "://" + req.get("host");
     const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: "1h" });
     
     mailService.sendEmail({
@@ -59,7 +60,7 @@ exports.register = async (req, res) => {
         <p>
           Please click on the verification link below to activaate your account
           <br>
-          <a href="${fullUrl}/user/verify/?secure="/${token}>Click to verify</a>
+          <a href="${Url}/user/verify/?secure="/${token}>Click to verify</a>
         </p>
       `,
     });
