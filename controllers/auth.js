@@ -178,9 +178,7 @@ exports.verify = async (req, res) => {
           </p>
         `,
         });
-        res
-          .sendFile(path.resolve("./views/activate.html"))
-          .json({ ok: true, message: "account activated" });
+        res.sendFile(path.resolve("./views/activate.html"))
       } else res.status(200).json({ ok: false, message: "activation failed" });
       // end
     });
