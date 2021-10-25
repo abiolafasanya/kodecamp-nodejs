@@ -39,6 +39,12 @@ exports.info = (req, res) => {
       email: user.email,
       createdAt: user.createdAt,
       address: user.address,
+      status: user.status,
+      phone: user.phone,
+      location: user.location,
+      updatedAt: user.updatedAt,
+      photo: user.photo
+
     }
     res.status(200).json({ ok: true, user: userProfile });
   })
