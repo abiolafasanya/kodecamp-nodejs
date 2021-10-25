@@ -69,7 +69,6 @@ fileUpload.addEventListener("change", (e) => {
 //profile upload {}
 window.addEventListener("load", () => {
   let TOKEN = localStorage.getItem("token");
-  console.log(TOKEN);
   console.log({ storageToken: TOKEN });
   fetch("/profile", {
     method: "GET",
