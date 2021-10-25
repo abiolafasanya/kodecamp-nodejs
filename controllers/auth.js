@@ -28,7 +28,9 @@ exports.register = async (req, res) => {
       id: uuid(),
       name,
       email,
-      status: 'pending',
+      status: "pending",
+      accountID: uuid(),
+      profileID: uuid(),
       password,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -37,26 +39,27 @@ exports.register = async (req, res) => {
     let profile = {
       ...user,
       address: null,
-      phone: '+2348102307473',
+      phone: "+2348102307473",
       photo: null,
     };
     // console.log("profile", profile);
     Users.push(profile);
     userProfile.push(profile);
     // console.log(user);
-    const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: '1h' });
-      mailService.sendEmail({ 
-        email: data.email,
-        subject: "Verify your account",
-        body: `
+    const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+    const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: "1h" });
+    mailService.sendEmail({
+      email: data.email,
+      subject: "Verify your account",
+      body: `
         <h3>Hi, ${data.name}</h3> 
         <p>
           Please click on the verification link below to activaate your account
           <br>
-          <a href="http://localhost:3000/verify-account/?secure="/${token}>Click to verify</a>
+          <a href="${fullUrl}/user/verify/?secure="/${token}>Click to verify</a>
         </p>
-      `
-       });
+      `,
+    });
     res
       .status(201)
       .json({ ok: true, profile, message: "User Registration Successful" });
@@ -84,12 +87,10 @@ exports.login = async (req, res) => {
       let isPassword = bcrypt.compareSync(password, user.password);
       if (!isPassword) {
         console.log(false, "failed");
-        return res
-          .status(400)
-          .json({
-            ok: false,
-            message: "Incorrect Password, User Login failed",
-          });
+        return res.status(400).json({
+          ok: false,
+          message: "Incorrect Password, User Login failed",
+        });
       }
       console.log("password: %d", true);
       const payload = {
