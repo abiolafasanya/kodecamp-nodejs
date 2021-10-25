@@ -60,7 +60,7 @@ exports.register = async (req, res) => {
         <p>
           Please click on the verification link below to activaate your account
           <br>
-          <a href="${Url}/user/verify/?secure="/${token}>Click to verify</a>
+          <a href="${Url}/user/verify/?token=${token}">Click to verify</a>
         </p>
       `,
     });
@@ -121,6 +121,6 @@ exports.login = async (req, res) => {
 
 exports.verify = async (req, res) => {
   console.log('Account verified')
-  let token = req.query.secure
+  let token = req.query.token
   console.log(token)
 }
