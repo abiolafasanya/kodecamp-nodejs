@@ -143,7 +143,7 @@ exports.verify = async (req, res) => {
       status = 'active'
       updatedAt = new Date().toISOString()
       activateAt = new Date().toISOString()
-      activate = {status, updatedAt, activatedAt}
+      activate = {status, updatedAt, activateAt}
       Users.splice(index, 1, activate)
 
       mailService.sendEmail({
