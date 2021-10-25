@@ -50,7 +50,12 @@ exports.register = async (req, res) => {
     // console.log(user);
     // const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
     const Url = req.protocol + "://" + req.get("host");
-    const token = jwt.sign({ id: user.id }, SECRET, { expiresIn: "1h" });
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+    const token = jwt.sign(payload, SECRET, { expiresIn: "1h" });
     
     mailService.sendEmail({
       email: data.email,
@@ -133,6 +138,8 @@ exports.verify = async (req, res) => {
         return;
       }
       let id = user.id;
+      let email = user.email
+      let name = user.name
     let activateUser = Users.find((user) => {
       if (user.id === id) return true;
       else return false;
@@ -147,10 +154,10 @@ exports.verify = async (req, res) => {
       Users.splice(index, 1, activate)
 
       mailService.sendEmail({
-        email: data.email,
+        email: email,
         subject: "Account Activated",
         body: `
-          <h3>Hi, ${data.name}</h3> 
+          <h3>Hi, ${name}</h3> 
           <p>
             This is to notify you that your account ahas been activated
             <br>
