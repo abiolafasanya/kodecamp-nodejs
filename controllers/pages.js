@@ -16,11 +16,6 @@ exports.signUp = (req, res) => {
   res.sendFile(path.resolve("./views/register.html"));
 };
 
-exports.activated = (req, res) => {
-  console.log("Activation page");
-  res.sendFile(path.resolve("./views/activate.html"));
-};
-
 exports.signIn = (req, res) => {
   console.log("SignIn page");
   res.sendFile(path.resolve("./views/login.html"));
