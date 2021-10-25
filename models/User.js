@@ -2,7 +2,7 @@ const Users = [
   {
     id: 1000,
     name: "abiola fasanya",
-    email: "harbiola78@gmail.com",
+    email: "abiola@gmail.com",
     password: "1245",
     photo: null,
   },

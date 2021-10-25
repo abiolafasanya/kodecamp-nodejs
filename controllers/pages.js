@@ -6,7 +6,7 @@ exports.index = (req, res) => {
   console.log("Hello world this is abiola fasanya");
 };
 
-exports.upload = (req, res) => {
+exports.profile = (req, res) => {
   console.log("Profile Upload page");
   res.sendFile(path.resolve("./views/profile.html"));
 };

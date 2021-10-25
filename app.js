@@ -22,9 +22,9 @@ const {upload} = require('./utils/upload')
 
 app.get('/api', controller.api)
 /* Login and register route */
-app.post("/login", authController.login)
-app.post("/register", authController.register)
-app.get('/profile',auth, controller.info) // get user info
+app.post("/signin", authController.login)
+app.post("/signup", authController.register)
+app.get('/user/profile',auth, controller.info) // get user info
 app.get('/user/verify', authController.verify)
 
 /* mail */
@@ -32,9 +32,9 @@ app.get('/user/verify', authController.verify)
 
 /*Endpoints for pages*/
 app.get('/', pagesController.index)
-app.get('/user/profile', auth, pagesController.upload)
-app.get('/signin', pagesController.signIn)
-app.get('/signup', pagesController.signUp)
+app.get('/profile', pagesController.profile)
+app.get('/login', pagesController.signIn)
+app.get('/register', pagesController.signUp)
 
 /* Authorization route */
 app.post('/contact', auth, pagesController.processContact)

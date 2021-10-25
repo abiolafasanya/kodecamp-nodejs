@@ -1,5 +1,5 @@
 const registerForm = document.querySelector("#register");
-const main = document.querySelector("main")
+const main = document.querySelector("main");
 
 registerForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -10,7 +10,7 @@ registerForm.addEventListener("submit", (e) => {
   email = e.target.email.value;
   password = e.target.password.value;
   cpassword = e.target.cpassword.value;
-  
+
   const formData = {
     name,
     email,
@@ -18,7 +18,7 @@ registerForm.addEventListener("submit", (e) => {
   };
   console.log(formData);
 
-  fetch("/register", {
+  fetch("/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -46,6 +46,12 @@ registerForm.addEventListener("submit", (e) => {
         password = e.target.password.value = "";
         cpassword = e.target.cpassword.value = "";
 
+        localStorage.clear();
+        let userId = data.profile.id;
+        console.log(userId);
+        if (userId) {
+          localStorage.setItem("userId", userId);
+        }
       } else {
         console.log(data.ok, data.message);
         let msg = document.createTextNode(data.message);

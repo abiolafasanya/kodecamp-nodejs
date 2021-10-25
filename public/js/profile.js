@@ -32,8 +32,10 @@ fileUpload.addEventListener("change", (e) => {
   uploadBtn.textContent = "uploading image...";
   uploadBtn.style.backgroundColor = "rgb(80, 4, 80)";
   let TOKEN = localStorage.getItem("token");
-  console.log(TOKEN);
-  fetch("/api/user/1004", {
+  let ID = localStorage.getItem("userId");
+  // ID = JSON.parse(ID)
+
+  fetch(`/api/user/${ID}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ` + `${TOKEN}`,
@@ -69,8 +71,9 @@ fileUpload.addEventListener("change", (e) => {
 //profile upload {}
 window.addEventListener("load", () => {
   let TOKEN = localStorage.getItem("token");
+  let ID = localStorage.getItem("userId");
   console.log({ storageToken: TOKEN });
-  fetch("/profile", {
+  fetch(`/api/user/${ID}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + `${TOKEN}`,
@@ -97,7 +100,7 @@ window.addEventListener("load", () => {
         document.querySelector("#phone").innerHTML = data.user.phone;
         document.querySelector("#location").innerHTML = data.user.location;
         document.querySelector("#occupation").innerHTML = data.user.occupation;
-        document.querySelector("#photo").src = data.user.photo;
+        document.querySelector("#photo").src = `/img/${data.user.photo.filename}`;
         console.log(data.user);
       } else {
         console.log(data.ok);

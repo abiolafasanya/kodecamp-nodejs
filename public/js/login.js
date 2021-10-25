@@ -4,8 +4,7 @@ const main = document.querySelector("main");
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
   console.log("this is register page");
-  let name, email, password, cpassword;
-
+  let email, password;
   email = e.target.email.value;
   password = e.target.password.value;
 
@@ -14,7 +13,7 @@ loginForm.addEventListener("submit", (e) => {
     password,
   };
 
-  fetch("/login", {
+  fetch("/signin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,7 +27,6 @@ loginForm.addEventListener("submit", (e) => {
     .then((data) => {
       console.log(data);
       const msgAlert = document.createElement("div");
-      localStorage.clear()
       if (data.ok) {
         console.log(data.ok, data.message);
         localStorage.setItem('token', data.token)

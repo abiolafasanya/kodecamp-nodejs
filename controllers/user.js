@@ -78,16 +78,16 @@ exports.singleUser = (req, res) => {
     });
     if (user) {
       res.status(200).json({
-        status: 200,
-        data: user,
+        ok: true,
+        user,
         message: `User with ID:${user.id} found`,
       });
     } else
-      return res.status(404).json({ status: 404, error: "User not found" });
+      return res.status(404).json({ ok: false, message: "User not found" });
   } catch (err) {
     res.status(500).json({
       status: 500,
-      error: [err.message, "User not found"],
+      message: [err.message, "User not found"],
     });
   }
 };

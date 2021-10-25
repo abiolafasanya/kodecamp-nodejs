@@ -174,7 +174,7 @@ exports.verify = async (req, res) => {
           <p>
             This is to notify you that your account ahas been activated
             <br>
-            <a href="${Url}/user/profile">View your Profile</a>
+            <a href="${Url}/profile">View your Profile</a>
           </p>
         `,
         });
