@@ -123,4 +123,5 @@ exports.verify = async (req, res) => {
   console.log('Account verified')
   let token = req.query.token
   console.log(token)
+  res.status(200).json(token)
 }
