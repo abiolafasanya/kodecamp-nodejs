@@ -77,9 +77,23 @@ exports.singleUser = (req, res) => {
       else return false;
     });
     if (user) {
+      let userProfile = {
+      name: user.name,
+      id: user.id,
+      email: user.email,
+      accountId: user.accountId,
+      profileId:user.profileId,
+      address: user.address,
+      status: user.status,
+      phone: user.phone,
+      location: user.location,
+      updatedAt: user.updatedAt,
+      photo: user.photo,
+      occupation: user.occupation,
+    }
       res.status(200).json({
         ok: true,
-        user,
+        user: userProfile,
         message: `User with ID:${user.id} found`,
       });
     } else
