@@ -201,6 +201,12 @@ exports.api = (req, res) => {
       addUser: "https://kodecamp.herokuapp.com/api/user/",
       updateUser: "https://kodecamp.herokuapp.com/api/user/id",
       deleteUser: "https://kodecamp.herokuapp.com/api/user/id",
+      login: "https://kodecamp.herokuapp.com/login",
+      register: "https://kodecamp.herokuapp.com/register",
+      signin: "https://kodecamp.herokuapp.com/signin",
+      signup: "https://kodecamp.herokuapp.com/signup",
+      profile: "https://kodecamp.herokuapp.com/profile",
+      userProfile: "https://kodecamp.herokuapp.com/user/profile",
     },
     documentation: "https://github.com/fastbeetech/kodecamp-nodejs",
   });

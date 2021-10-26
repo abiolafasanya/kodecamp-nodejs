@@ -27,21 +27,16 @@ app.post("/signup", authController.register)
 app.get('/user/profile',auth, controller.info) // get user info
 app.get('/user/verify', authController.verify)
 
-/* mail */
-
-
 /*Endpoints for pages*/
 app.get('/', pagesController.index)
 app.get('/profile', pagesController.profile)
 app.get('/login', pagesController.signIn)
 app.get('/register', pagesController.signUp)
+app.post('/contact', auth, pagesController.processContact)
 
 /* Authorization route */
-app.post('/contact', auth, pagesController.processContact)
 app.get("/api/users", auth, controller.getUsers)
 app.get("/api/user/:id", auth, controller.singleUser)
-/* When online this develop error because it will not 
-save file on heroku but works fine on local host */
 app.post("/api/user", auth, upload.single('photo'), controller.addUser)
 app.delete("/api/user/:id", auth, controller.deleteUser)
 app.put("/api/user/:id", auth, upload.single('photo'), controller.updateUser)
