@@ -25,7 +25,6 @@ exports.signup = async (req, res) => {
     let { name, email, password } = data;
     password = await bcrypt.hash(password, 10);
     let user = {
-      id: uuid(),
       name,
       email,
       status: "pending",
