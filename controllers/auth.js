@@ -8,7 +8,7 @@ const joi = require("joi");
 const { v4: uuid } = require("uuid");
 const { userModel, profileModel } = require("../models/users");
 const mailService = require("../service/mail");
-console.log(userModel, profileModel);
+// console.log(userModel, profileModel);
 
 exports.signup = async (req, res) => {
   const objSchema = joi.object({
@@ -98,7 +98,7 @@ exports.signin = async (req, res) => {
     let data = await objSchema.validateAsync(req.body);
     console.log(data);
     let { email, password } = data;
-    let user = userModel.findOne({ email });
+    let user = await userModel.findOne({ email });
     if (user) {
       console.log(user);
       let isPassword = bcrypt.compareSync(password, user.password);
