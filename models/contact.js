@@ -1,32 +1,24 @@
-const Contacts = [
+const { Schema, model } = require("mongoose");
+// contact Schema
+const contactSchema = new Schema(
   {
-    id: 1001,
-    name: "abiola fasanya",
-    email: "harbiola78@gmail.com",
-    message:
-      "Hello how is express framework going, hoope you are enjoying your beginning stage in NodeJs",
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      tirm: true,
+    },
+    message: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
-  {
-    id: 1002,
-    name: "lorem ipsum",
-    email: "lorem@gmail.com",
-    message:
-      "Hello how is express framework going, hoope you are enjoying your beginning stage in NodeJs",
-  },
-  {
-    id: 1003,
-    name: "angela gorilla",
-    email: "angela@gmail.com",
-    message:
-      "Hello how is express framework going, hoope you are enjoying your beginning stage in NodeJs",
-  },
-  {
-    id: 1004,
-    name: "mark essien",
-    email: "mark@gmail.com",
-    message:
-      "Hello how is express framework going, hoope you are enjoying your beginning stage in NodeJs",
-  },
-];
+  { timestamps: true }
+);
 
-module.exports = Contacts;
+exports.contactModel = model("contacts", contactSchema);

@@ -6,11 +6,11 @@ const path = require("path");
 const fs = require("fs");
 const joi = require("joi");
 const { v4: uuid } = require("uuid");
-const { Users } = require("../models/User");
-let userProfile = require("../models/profile");
+const { userModel, profileModel } = require("../models/users");
 const mailService = require("../service/mail");
+console.log(userModel, profileModel);
 
-exports.register = async (req, res) => {
+exports.signup = async (req, res) => {
   const objSchema = joi.object({
     name: joi.string().required(),
     email: joi.string().email({
@@ -32,21 +32,21 @@ exports.register = async (req, res) => {
       accountId: uuid(),
       profileId: uuid(),
       password,
-      updatedAt: new Date().toISOString(),
-      createdAt: new Date().toISOString(),
     };
     // check if user exists
-    let ifEmailExists = Users.find((user) => {
-      if (user.email === data.email) return true;
-      else return false;
-    });
-    // end of checking
+    const ifEmailExists = await userModel.findOne({ email });
     if (ifEmailExists)
       return res.status(400).json({
         message: "Email already taken",
       });
 
-    Users.push(user);
+    const ifuser = userModel.create(user);
+    if (!ifuser)
+      return res.status(401).json({
+        ok: false,
+        message: "User not created",
+      });
+
     const profile = {
       ...user,
       address: "fawole street",
@@ -55,10 +55,8 @@ exports.register = async (req, res) => {
       photo: null,
       occupation: "Electrical Engineer/Software Developer",
     };
-    // console.log("profile", profile);
-    Users.push(profile);
-    userProfile.push(profile);
-    // console.log(user);
+    profileModel.create(profile);
+
     // const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
     const Url = req.protocol + "://" + req.get("host");
     const payload = {
@@ -90,7 +88,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+exports.signin = async (req, res) => {
   const objSchema = joi.object({
     email: joi.string().email({ minDomainSegments: 2 }).required(),
     password: joi.string().required(),
@@ -100,10 +98,7 @@ exports.login = async (req, res) => {
     let data = await objSchema.validateAsync(req.body);
     console.log(data);
     let { email, password } = data;
-    let user = Users.find((user) => {
-      if (user.email === email) return true;
-      else return false;
-    });
+    let user = userModel.findOne({ email });
     if (user) {
       console.log(user);
       let isPassword = bcrypt.compareSync(password, user.password);
@@ -114,6 +109,7 @@ exports.login = async (req, res) => {
           message: "Incorrect Password, User Login failed",
         });
       }
+
       console.log("password: %d", true);
       const payload = {
         id: user.id,
@@ -153,19 +149,19 @@ exports.verify = async (req, res) => {
       let email = user.email;
       let name = user.name;
       let Url = user.Url;
-      let activateUser = Users.find((user) => {
-        if (user.id === id) return true;
-        else return false;
+      let activate = {status: 'verified'}
+      let activateUser = userModel.updateOne({email}, activate, (err, user) => {
+        if(err){
+          res.status(401).json({ok: false, message: err.message})  
+        }
+        if(!user) {
+          res.status(404).json({
+            ok: false,
+            message: err.message,
+          })
+        }
       });
       if (activateUser) {
-        let index, status, updatedAt, activateAt, activate;
-        index = Users.findIndex((user) => user.id === id);
-        status = "active";
-        updatedAt = new Date().toISOString();
-        activateAt = new Date().toISOString();
-        activate = { status, updatedAt, activateAt };
-        Users.splice(index, 1, activate);
-
         mailService.sendEmail({
           email: email,
           subject: "Account Activated",
