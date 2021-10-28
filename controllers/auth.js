@@ -96,11 +96,9 @@ exports.signin = async (req, res) => {
 
   try {
     let data = await objSchema.validateAsync(req.body);
-    console.log(data);
     let { email, password } = data;
     let user = await userModel.findOne({ email });
     if (user) {
-      console.log(user);
       let isPassword = bcrypt.compareSync(password, user.password);
       if (!isPassword) {
         console.log(false, "failed");
