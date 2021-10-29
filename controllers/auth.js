@@ -24,7 +24,6 @@ exports.signup = async (req, res) => {
     let data = await objSchema.validateAsync(req.body);
     let { name, email, password } = data;
     password = await bcrypt.hash(password, 10);
-
     // check if user exists
     const ifEmailExists = await userModel.findOne({ email });
     if (ifEmailExists) {
