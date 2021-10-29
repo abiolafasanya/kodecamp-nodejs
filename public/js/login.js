@@ -29,7 +29,11 @@ loginForm.addEventListener("submit", (e) => {
       const msgAlert = document.createElement("div");
       if (data.ok) {
         console.log(data.ok, data.message);
-        localStorage.setItem('token', data.token)
+
+        localStorage.clear();
+        localStorage.setItem("userId", data.id);
+        localStorage.setItem("token", data.token);
+
         let msg = document.createTextNode(data.message);
         msgAlert.appendChild(msg);
         msgAlert.classList.add("success");
@@ -52,6 +56,6 @@ loginForm.addEventListener("submit", (e) => {
         }, 6000);
       }
     });
-    email = e.target.email.value = "";
-    password = e.target.password.value = "";
+  email = e.target.email.value = "";
+  password = e.target.password.value = "";
 });

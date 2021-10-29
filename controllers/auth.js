@@ -121,6 +121,7 @@ exports.signin = async (req, res) => {
         ok: true,
         message: "User loggedIn",
         token,
+        id: user.id,
       });
     } else {
       res

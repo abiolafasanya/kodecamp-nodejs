@@ -73,7 +73,7 @@ window.addEventListener("load", () => {
   let TOKEN = localStorage.getItem("token");
   let ID = localStorage.getItem("userId");
   console.log({ storageToken: TOKEN });
-  fetch(`/api/user/${ID}`, {
+  fetch(`/user/profile/${ID}`, {
     method: "GET",
     headers: {
       Authorization: "Bearer " + `${TOKEN}`,
@@ -88,20 +88,19 @@ window.addEventListener("load", () => {
     .then((data) => {
       console.log(data.ok);
       if (data.ok) {
-        console.log(data.user)
-        console.log(data.user.name)
-        document.querySelector("#username").innerHTML = data.user.name;
-        document.querySelector("#email").innerHTML = data.user.email;
-        document.querySelector("#updated_at").innerHTML = data.user.updatedAt;
-        document.querySelector("#status").innerHTML = data.user.status;
-        document.querySelector("#profile_id").innerHTML = data.user.profileId;
-        document.querySelector("#account_id").innerHTML = data.user.accountId;
-        document.querySelector("#address").innerHTML = data.user.address;
-        document.querySelector("#phone").innerHTML = data.user.phone;
-        document.querySelector("#location").innerHTML = data.user.location;
-        document.querySelector("#occupation").innerHTML = data.user.occupation;
-        document.querySelector("#photo").src = `/img/${data.user.photo.filename}`;
-        console.log(data.user);
+        console.log(data.profile)
+        console.log(data.profile.name)
+        document.querySelector("#username").innerHTML = data.profile.name;
+        document.querySelector("#email").innerHTML = data.profile.email;
+        document.querySelector("#updated_at").innerHTML = data.profile.updatedAt;
+        document.querySelector("#status").innerHTML = data.status;
+        document.querySelector("#profile_id").innerHTML = data.profile.id;
+        document.querySelector("#account_id").innerHTML = data.profile.accountId;
+        document.querySelector("#address").innerHTML = data.profile.address;
+        document.querySelector("#phone").innerHTML = data.profile.phone;
+        document.querySelector("#location").innerHTML = data.profile.location;
+        document.querySelector("#occupation").innerHTML = data.profile.occupation;
+        document.querySelector("#photo").src = `/img/${data.profile.photo.filename}` || null;
       } else {
         console.log(data.ok);
       }

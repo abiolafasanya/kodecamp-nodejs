@@ -46,12 +46,6 @@ registerForm.addEventListener("submit", (e) => {
         password = e.target.password.value = "";
         cpassword = e.target.cpassword.value = "";
 
-        localStorage.clear();
-        let userId = data.profile.id;
-        console.log(userId);
-        if (userId) {
-          localStorage.setItem("userId", userId);
-        }
       } else {
         console.log(data.ok, data.message);
         let msg = document.createTextNode(data.message);

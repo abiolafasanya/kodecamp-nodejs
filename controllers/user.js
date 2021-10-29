@@ -31,25 +31,31 @@ exports.profilePics = (req, res) => {
   }
 };
 
-exports.info = async (req, res) => {
-  console.log(profileModel.find({}));
-  profileModel.findOne({ email }, (err, user) => {
-    let userProfile = {
-      name: user.name,
-      id: user.id,
-      email: user.email,
-      accountId: user.accountId,
-      profileId: user.profileId,
-      address: user.address,
-      status: user.status,
-      phone: user.phone,
-      location: user.location,
-      updatedAt: user.updatedAt,
-      photo: user.photo,
-      occupation: user.occupation,
-    };
-    res.status(200).json({ ok: true, user: userProfile });
+exports.profile = async (req, res) => {
+ try {
+  let id = {_id: req.params.id}
+  userModel.findOne(id, async (err, user) => {
+    if(err){
+      console.log(err)
+    }
+    if(!user){
+      res.status(404).json({ ok: false, message: "user not found" });
+    }
+    profileModel.findOne({email: user.email}, async (err, profile) => {
+      if(err){
+        console.log(err)
+      }
+      
+      if(!profile){
+        res.status(404).json({ ok: false, message: "profile not found" });
+      }
+      console.log(user, profile);
+      res.status(200).json({ ok: true, profile, status: user.status, message: "profile available" });
+    })
   });
+ } catch (err) {
+   res.status(500).json({ok: false, message: err.message})
+ }
 };
 
 /* Endpoint action functions */
@@ -152,7 +158,8 @@ exports.updateProfile = async (req, res) => {
     let { name, photo, location, address, occupation } = req.body;
     photo = req.file;
     let updateUser = { name, photo, location, address, occupation };
-    userModel.findOne({ id: req.params.id }, (err, user) => {
+    let id = { _id: req.params.id };
+    userModel.findOne(id, (err, user) => {
       if (user) {
         profileModel.updateOne({ email: user.email }, updateUser, (err, result) => {
           if (err) {

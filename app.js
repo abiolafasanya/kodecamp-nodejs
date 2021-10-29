@@ -25,7 +25,7 @@ app.get("/api", controller.api);
 /* Login and register route */
 app.post("/signin", authController.signin);
 app.post("/signup", authController.signup);
-app.get("/user/profile", auth, controller.info); // get user info
+app.get("/user/profile/:id", auth, controller.profile); // get user info
 
 /*Endpoints for pages*/
 app.get("/", pagesController.contactPage);

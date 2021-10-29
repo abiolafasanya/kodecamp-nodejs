@@ -50,10 +50,6 @@ const profileSchema = new Schema(
       tirm: true,
       unique: true,
     },
-    status: {
-      type: Schema.Types.ObjectId, ref: "users",
-      trim: true,
-    },
     role: {
       type: String,
       enum: ["admin", "tutor", "student", "member"],
