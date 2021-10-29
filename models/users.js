@@ -19,9 +19,13 @@ const userSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["verified", "pending", "inactive"],
+      enum: ["pending", "active"],
       default: "pending",
       trim: true,
+    },
+    confirmationCode: {
+      type: String,
+      unique: true,
     },
     role: {
       type: String,
@@ -76,7 +80,7 @@ const profileSchema = new Schema(
     occupation: {
       type: String,
       trim: true,
-    }
+    },
   },
   { timestamps: true }
 );

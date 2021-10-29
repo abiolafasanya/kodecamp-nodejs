@@ -24,54 +24,51 @@ exports.signup = async (req, res) => {
     let data = await objSchema.validateAsync(req.body);
     let { name, email, password } = data;
     password = await bcrypt.hash(password, 10);
-    let user = {
-      id: uuid(),
-      name,
-      email,
-      status: "pending",
-      accountId: uuid(),
-      profileId: uuid(),
-      password,
-    };
+
     // check if user exists
     const ifEmailExists = await userModel.findOne({ email });
-    if (ifEmailExists)
+    if (ifEmailExists) {
       return res.status(400).json({
         message: "Email already taken",
       });
+    }
 
-    const ifuser = userModel.create(user);
+    // const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
+    const Url = req.protocol + "://" + req.get("host");
+    const payload = {
+      name: name,
+      email: email,
+      Url: Url,
+    };
+    const token = jwt.sign(payload, SECRET, { expiresIn: "1d" });
+    // create user
+    const newUser = {
+      name,
+      email,
+      accountId: uuid(),
+      profileId: uuid(),
+      password,
+      confirmationCode: token,
+    };
+    const ifuser = await userModel.create(newUser);
     if (!ifuser)
       return res.status(401).json({
         ok: false,
         message: "User not created",
       });
 
+    // create profile
     const profile = {
-      ...user,
-      address: "fawole street",
-      location: "lagos",
-      phone: "+2348102307473",
-      photo: null,
-      occupation: "Electrical Engineer/Software Developer",
+      ...newUser,
     };
-    profileModel.create(profile);
-
-    // const fullUrl = req.protocol + "://" + req.get("host") + req.originalUrl;
-    const Url = req.protocol + "://" + req.get("host");
-    const payload = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      Url: Url,
-    };
-    const token = jwt.sign(payload, SECRET, { expiresIn: "1h" });
+    await profileModel.create(profile);
 
     mailService.sendEmail({
       email: data.email,
       subject: "Verify your account",
       body: `
-        <h3>Hi, ${data.name}</h3> 
+        <h1> Account Confirmation </h1>
+        <h2>Hi, ${data.name}</h2> 
         <p>
           Please click on the verification link below to activaate your account
           <br>
@@ -84,7 +81,7 @@ exports.signup = async (req, res) => {
       .status(201)
       .json({ ok: true, profile, message: "User Registration Successful" });
   } catch (err) {
-    res.status(422).json({ ok: false, message: err.details[0].message });
+    res.status(422).json({ ok: false, message: err.message });
   }
 };
 
@@ -107,13 +104,21 @@ exports.signin = async (req, res) => {
           message: "Incorrect Password, User Login failed",
         });
       }
-
       console.log("password: %d", true);
+
+      if (user.status != "active") {
+        console.log("pending verification");
+        return res.status(401).json({
+          ok: false,
+          message: "Pending account. Please verify your email",
+        });
+      }
       const payload = {
         id: user.id,
         name: user.name,
         email: user.email,
       };
+
       const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
       return res.status(200).json({
         ok: true,
@@ -126,55 +131,46 @@ exports.signin = async (req, res) => {
         .json({ ok: false, message: "Incorrect Email, user not found" });
     }
   } catch (err) {
-    res.status(422).json({ ok: false, message: err.details[0].message });
+    res.status(422).json({ ok: false, message: err.message });
   }
 };
 
 exports.verify = async (req, res) => {
-  console.log("Account verified");
-  let token = req.query.token;
-  console.log(token);
+  let confirmationCode = { confirmationCode: req.query.token };
   try {
-    jwt.verify(token, SECRET, (err, user) => {
-      if (err) {
-        res.status(403).json({
-          status: 403,
-          message: "Token is not valid",
-        });
-        return;
+    userModel.findOne(confirmationCode, async (err, user) => {
+      if (!user) {
+        console.log(err.message);
+        return res.status(404).json({ ok: false, message: "User not found" });
       }
-      let id = user.id;
-      let email = user.email;
-      let name = user.name;
-      let Url = user.Url;
-      let activate = {status: 'verified'}
-      let activateUser = userModel.updateOne({email}, activate, (err, user) => {
-        if(err){
-          res.status(401).json({ok: false, message: err.message})  
+      let getURl = jwt.verify(user.confirmationCode, SECRET);
+      //  let getURl = jwt.verify(confirmationCode, SECRET, (err, user)=> {
+      //    if (user) return user.Url
+      //   })
+      console.log(getURl);
+      let Url = await getURl.Url;
+      user.status = "active";
+      user.save((err) => {
+        if (err) {
+          res.status(500).json({ message: err });
+          return;
         }
-        if(!user) {
-          res.status(404).json({
-            ok: false,
-            message: err.message,
-          })
-        }
-      });
-      if (activateUser) {
+        // account verification confirmation notification
         mailService.sendEmail({
-          email: email,
+          email: user.email,
           subject: "Account Activated",
           body: `
-          <h3>Hi, ${name}</h3> 
+          <h1> Account Activated </h1>
+          <h3>Hi, ${user.name}</h3> 
           <p>
             This is to notify you that your account ahas been activated
             <br>
             <a href="${Url}/profile">View your Profile</a>
           </p>
-        `,
+      `,
         });
         res.status(200).json({ ok: true, message: "account activated" });
-      } else res.status(200).json({ ok: false, message: "activation failed" });
-      // end
+      });
     });
   } catch (err) {
     res.status(500).json({ err: err.message });
