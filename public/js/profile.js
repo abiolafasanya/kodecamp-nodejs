@@ -100,7 +100,7 @@ window.addEventListener("load", () => {
         document.querySelector("#phone").innerHTML = data.user.phone;
         document.querySelector("#location").innerHTML = data.user.location;
         document.querySelector("#occupation").innerHTML = data.user.occupation;
-        document.querySelector("#photo").src = `/img/${data.user.photo.filename}`;
+        // document.querySelector("#photo").src = `/img/${data.user.photo.filename}`;
         console.log(data.user);
       } else {
         console.log(data.ok);

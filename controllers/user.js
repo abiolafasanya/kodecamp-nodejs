@@ -75,32 +75,27 @@ exports.getUsers = async (req, res) => {
 exports.singleUser = (req, res) => {
   try {
     let id = { _id: req.params.id };
-    let user = userModel.findOne(id, (user) => {
-      if (user.id === id) return true;
-      else return false;
-    });
-    if (user) {
+    let user = userModel.findOne(id, (err, user) => {
+      if (!user) {
+        return res.status(404).json({ ok: false, message: "User not found" });
+      }
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ ok: false, message: err });
+      }
       let userProfile = {
-        name: user.name,
         id: user.id,
+        name: user.name,
         email: user.email,
-        accountId: user.accountId,
-        profileId: user.profileId,
-        address: user.address,
         status: user.status,
-        phone: user.phone,
-        location: user.location,
         updatedAt: user.updatedAt,
-        photo: user.photo,
-        occupation: user.occupation,
       };
       res.status(200).json({
         ok: true,
         user: userProfile,
         message: `User with ID:${user.id} found`,
       });
-    } else
-      return res.status(404).json({ ok: false, message: "User not found" });
+    });
   } catch (err) {
     res.status(500).json({
       status: 500,
@@ -152,18 +147,23 @@ exports.addUser = (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
+exports.updateProfile = async (req, res) => {
   try {
-    let id = { _id: req.params.id };
-    let { name, email, photo, location, address, occupation } = req.body;
+    let { name, photo, location, address, occupation } = req.body;
     photo = req.file;
-    let updateUser = { name, email, photo, location, address, occupation };
-    userModel.updateOne(id, updateUser, (err, user) => {
+    let updateUser = { name, photo, location, address, occupation };
+    userModel.findOne({ id: req.params.id }, (err, user) => {
       if (user) {
-        res.status(201).json({
-          ok: true,
-          data: user,
-          message: `User profile updated`,
+        profileModel.updateOne({ email: user.email }, updateUser, (err, result) => {
+          if (err) {
+            console.log(err);
+            res.status(400).json({ ok: false, message: err });
+          }
+          res.status(201).json({
+            ok: true,
+            data: result,
+            message: `User profile updated`,
+          });
         });
       } else {
         console.log(err.message);

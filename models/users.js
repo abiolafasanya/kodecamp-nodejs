@@ -52,7 +52,7 @@ const profileSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["verified", "pending", "inactive"],
+      enum: ["pending", "activee"],
       default: "pending",
       trim: true,
     },

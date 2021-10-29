@@ -40,7 +40,7 @@ app.get("/api/users", controller.getUsers);
 app.get("/api/user/:id", auth, controller.singleUser);
 app.post("/api/user", auth, upload.single("photo"), controller.addUser);
 app.delete("/api/user/:id", auth, controller.deleteUser);
-app.put("/api/user/:id", auth, upload.single("photo"), controller.updateUser);
+app.put("/user/profile/:id", auth, upload.single("photo"), controller.updateProfile);
 
 app.listen(PORT, () => {
   console.log("Server running on port %d", PORT);

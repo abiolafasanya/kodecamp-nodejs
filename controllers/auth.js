@@ -2,8 +2,6 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
-const path = require("path");
-const fs = require("fs");
 const joi = require("joi");
 const { v4: uuid } = require("uuid");
 const { userModel, profileModel } = require("../models/users");
