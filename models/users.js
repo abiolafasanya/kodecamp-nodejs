@@ -51,9 +51,7 @@ const profileSchema = new Schema(
       unique: true,
     },
     status: {
-      type: String,
-      enum: ["pending", "activee"],
-      default: "pending",
+      type: Schema.Types.ObjectId, ref: "users",
       trim: true,
     },
     role: {
@@ -84,6 +82,5 @@ const profileSchema = new Schema(
   },
   { timestamps: true }
 );
-
 exports.userModel = model("users", userSchema);
 exports.profileModel = model("profile", profileSchema);
