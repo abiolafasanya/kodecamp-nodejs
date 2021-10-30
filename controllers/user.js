@@ -1,5 +1,5 @@
 // const { Users } = require("../models/User");
-const { userModel, profileModel } = require("../models/users");
+const { userModel, profileModel, permissionModel } = require("../models/users");
 
 exports.profile = async (req, res) => {
  try {
@@ -11,17 +11,25 @@ exports.profile = async (req, res) => {
     if(!user){
       res.status(404).json({ ok: false, message: "user not found" });
     }
-    profileModel.findOne({email: user.email}, async (err, profile) => {
-      if(err){
-        console.log(err)
-      }
-      
-      if(!profile){
-        res.status(404).json({ ok: false, message: "profile not found" });
-      }
-      console.log(user, profile);
-      res.status(200).json({ ok: true, profile, status: user.status, message: "profile available" });
-    })
+    profileModel
+    .findOne({email: user.email})
+      .populate({path: 'status', select: 'status' })
+      .populate({path: 'permission', select: 'type' })
+      .exec((err, profile) => {
+        if(err){
+          console.log(err)
+          res.status(404).json({ ok: false, message: err });
+        }
+        console.log(profile)
+        if(profile.email != user.email){
+          console.log('user not found (not matched)')
+          res.status(404).json({ ok: false, message: "profile not available" });
+        }
+        profile.accountId = user._id
+        profile.status = user.status
+        res.status(200).json({ ok: true, profile, message: "profile available" });
+
+      })
   });
  } catch (err) {
    res.status(500).json({ok: false, message: err.message})
@@ -82,11 +90,11 @@ exports.singleUser = (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    let { name, location, address, occupation } = req.body;
-    pics = req.file === undefined || null ? null : req.file.filename;
+    let { name, location, address, occupation, phone } = req.body;
+    pics = req.file === undefined || null ? 'nopics.jpg' : req.file.filename;
 
     console.log(pics, req.file)
-    let updateUser = { name, photo: pics, location, address, occupation };
+    let updateUser = { name, photo: pics, location, phone, address, occupation };
     let id = { _id: req.params.id };
     userModel.findOne(id, (err, user) => {
       if (user) {
@@ -136,7 +144,16 @@ exports.deleteUser = async (req, res) => {
         })
       }
       console.log('user profile removed')
-      // remove user too
+      // remove permission  too
+      let removePermission = await permissionModel.deleteOne({user: findUser._id})
+      if(!removePermission){
+        console.log('unable to remove permissions')
+        return res.status(400).json({
+          ok: false,
+          message: "unable to remove permissions"
+        })
+      }
+      // proceed to delete user
     userModel.deleteOne(id, (err, user) => {
       if (err) {
         res.status(400).json({ status: 400, message: err.message });

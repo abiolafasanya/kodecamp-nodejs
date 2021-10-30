@@ -2,11 +2,6 @@ const { Schema, model } = require("mongoose");
 // users Schema
 const userSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     email: {
       type: String,
       required: true,
@@ -19,18 +14,13 @@ const userSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "active"],
+      enum: ["pending", "activated"],
       default: "pending",
       trim: true,
     },
     confirmationCode: {
       type: String,
       unique: true,
-    },
-    role: {
-      type: String,
-      enum: ["admin", "tutor", "student", "member"],
-      default: "member",
     },
   },
   { timestamps: true }
@@ -44,24 +34,32 @@ const profileSchema = new Schema(
       required: true,
       trim: true,
     },
+    permission: {
+      type: Schema.Types.ObjectId,
+      ref: "permissions",
+    },
     email: {
       type: String,
       required: true,
       tirm: true,
       unique: true,
     },
-    role: {
-      type: String,
-      enum: ["admin", "tutor", "student", "member"],
-      default: "member",
+    status: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    accountId: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
     },
     address: {
       type: String,
       trim: true,
     },
     phone: {
-      type: String,
-      trim: true,
+      type: Number,
+    min: [10, 'Must be at least 10, got {VALUE}'],
+    max: 14
     },
     photo: {
       data: Buffer,
@@ -78,5 +76,24 @@ const profileSchema = new Schema(
   },
   { timestamps: true }
 );
+
+const permissionSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+    },
+    type: {
+      type: String,
+      required: true,
+      enum: ["user", "admin", "editor", "moderator"],
+      default: "user",
+      trim: true,
+    },
+  },
+  { timestamps: true }
+);
+
 exports.userModel = model("users", userSchema);
-exports.profileModel = model("profile", profileSchema);
+exports.profileModel = model("profiles", profileSchema);
+exports.permissionModel = model("permissions", permissionSchema);

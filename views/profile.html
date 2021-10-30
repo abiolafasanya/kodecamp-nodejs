@@ -12,9 +12,9 @@
       <nav>
         <h1>Fastbeetech</h1>
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </header>
@@ -22,38 +22,41 @@
       <section id="profile-section">
         <aside>
           <div class="title">
-            <input type="hidden" value="">
+            <input type="hidden" value="" />
             <h2>Profile</h2>
             <span id="status">Not Active</span>
           </div>
           <div class="profile-img">
-            <img
-              src="/img/nopics.jpg"
-              alt=" "
-              id="photo"
-              class="pics"
-              />
+            <img src="/img/nopics.jpg" alt=" " id="photo" class="pics" />
             <button class="upload-btn">
-            <input type="file" name="photo" class="upload" id="photo" hidden/>
-            Upload Image
+              <input
+                type="file"
+                name="photo"
+                class="upload"
+                id="photo"
+                hidden
+              />
+              Upload Image
             </button>
-            <p class="upload_progress" hidden> Error uploading image</p>
-        </div>
+            <p class="upload_progress" hidden>Error uploading image</p>
+          </div>
           <div class="info">
             <div class="info-group">
               <div>Last Updated</div>
-              <time datetime="yyyy-mm-dd" id="updated_at">18, october 2021 at 3:25pm</time>
+              <time datetime="yyyy-mm-dd" id="updated_at"
+                >18, october 2021 at 3:25pm</time
+              >
             </div>
             <div class="info-group">
               <div>Account ID</div>
               <span id="account_id">asdfg-gjhjg-09965</span>
             </div>
             <div class="info-group">
-                <div>Profile ID</div>
-                <span id="profile_id">asdfg-gjhjg-09965</span>
+              <div>Profile ID</div>
+              <span id="profile_id">asdfg-gjhjg-09965</span>
             </div>
             <div class="info-group">
-                <div>Account</div>
+              <div>Account</div>
               <a href="#logout" id="logoutUser">Logout</a>
               <a href="#delete" id="deleteProfile">Delete</a>
             </div>
@@ -66,36 +69,67 @@
               <div class="detail-group1">
                 <div class="group-1">
                   <h3>Name</h3>
-                  <div id="username">Abiola Fasanya</div>
+                  <div id="username"></div>
                 </div>
                 <div class="group-1">
                   <h3>Email</h3>
-                  <div id="email">harbiola78@gmail.com</div>
+                  <div id="email"></div>
                 </div>
               </div>
               <div class="detail-group1">
                 <div class="group-1">
                   <h3>Phone</h3>
-                  <div id="phone">+2348102307473</div>
+                  <div style="margin: 5px">
+                    <input
+                      type="tel"
+                      placeholder="e.g 2348102307473"
+                      class="form-control"
+                      id="phone"
+                    />
+                  </div>
                 </div>
                 <div class="group-1">
                   <h3>Occupation</h3>
-                  <div id="occupation">Software Developer</div>
+                  <div style="margin: 5px">
+                    <input
+                      type="text"
+                      placeholder="e.g Software Developer"
+                      class="form-control"
+                      id="occupation"
+                    />
+                  </div>
                 </div>
               </div>
               <div class="detail-group1">
                 <div class="group-1">
                   <h3>Location</h3>
-                  <div id="location">Lagos</div>
+                  <div style="margin: 5px">
+                    <input
+                      type="text"
+                      placeholder="e.g Lagos"
+                      class="form-control"
+                      id="location"
+                    />
+                  </div>
                 </div>
                 <div class="group-1">
                   <h3>Address</h3>
-                  <div id="address">14, Fawole Street, along bayeku road, ikorodu, Lagos</div>
+                  <div style="margin: 5px">
+                    <textarea
+                      id="address"
+                      class="form-control"
+                      autocapitalize="true"
+                      name="address"
+                      cols="30"
+                      rows="5"
+                      placeholder="e.g 14, Fawole Street"
+                    >
+                    </textarea>
+                  </div>
                 </div>
               </div>
-              
             </div>
-            
+
             <div class="profile-update">
               <div class="detail-group2">
                 <div class="group-2">
@@ -103,23 +137,13 @@
                   <span> Change </span>
                 </div>
                 <!-- <div class="line-break"></div> -->
-                <hr>
+                <hr />
                 <div class="form">
-                  <form enctype="multipart/form-data">
-                    <div class="form-group">
-                      <label for="">Password</label>
-                      <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        value="mypassword isvery long"
-                        class="form-control"
-                      />
-                    </div>
-                    <div class="form-group">
-                      <button class="btn-password">Update Profile</button>
-                    </div>
-                  </form>
+                  <div class="form-group">
+                    <button class="btn-update" id="btn-update">
+                      Update Profile
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

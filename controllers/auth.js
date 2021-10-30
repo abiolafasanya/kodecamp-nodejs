@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { SECRET } = process.env;
 const joi = require("joi");
 const { v4: uuid } = require("uuid");
-const { userModel, profileModel } = require("../models/users");
+const { userModel, profileModel, permissionModel } = require("../models/users");
 const mailService = require("../service/mail");
 // console.log(userModel, profileModel);
 
@@ -42,21 +42,34 @@ exports.signup = async (req, res) => {
     const newUser = {
       name,
       email,
-      accountId: uuid(),
-      profileId: uuid(),
       password,
       confirmationCode: token,
     };
-    const ifuser = await userModel.create(newUser);
-    if (!ifuser)
+    const ifUser = await userModel.create(newUser);
+    if (!ifUser)
       return res.status(401).json({
         ok: false,
         message: "User not created",
       });
 
+    //permission
+    const permission = {
+      user: ifUser._id,
+    };
+    const ifPermission = await permissionModel.create(permission);
+    if (!ifPermission) {
+      console.log("permission creation failed");
+      return res
+        .status(400)
+        .json({ ok: false, message: "permission creation failed" });
+    }
+    console.log(ifPermission);
+
     // create profile
     const profile = {
       ...newUser,
+      status: ifUser._id,
+      permission: ifPermission._id,
     };
     await profileModel.create(profile);
 
@@ -103,7 +116,7 @@ exports.signin = async (req, res) => {
       }
       console.log("password: %d", true);
 
-      if (user.status != "active") {
+      if (user.status != "activated") {
         console.log("pending verification");
         return res.status(401).json({
           ok: false,
@@ -147,7 +160,7 @@ exports.verify = async (req, res) => {
       //   })
       console.log(getURl);
       let Url = await getURl.Url;
-      user.status = "active";
+      user.status = "activated";
       user.save((err) => {
         if (err) {
           res.status(500).json({ message: err });

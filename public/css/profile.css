@@ -2,6 +2,7 @@
     --success-upload: rgb(106, 190, 106);
     --error-upload: rgb(241, 98, 98);
 }
+
 body {
     margin: 0px;
     padding: 0px;
@@ -15,6 +16,7 @@ nav {
     padding: 0 3rem;
     background: rgb(247, 239, 247);
 }
+
 nav ul {
     display: flex;
     list-style: none;
@@ -22,7 +24,8 @@ nav ul {
     align-items: center;
     justify-content: center;
 }
-nav ul li a{
+
+nav ul li a {
     padding: 15px;
     text-decoration: none;
     font-size: 18px;
@@ -30,6 +33,7 @@ nav ul li a{
     font-weight: bold;
 
 }
+
 nav h1 {
     color: rgb(80, 4, 80);
 }
@@ -50,6 +54,7 @@ nav h1 {
 .profile-img {
     max-width: 250px;
 }
+
 .pics {
     width: 100%;
     max-height: 250px;
@@ -58,12 +63,14 @@ nav h1 {
     border: 1px solid #cecece;
     padding: 3px;
 }
-.info-group div{
+
+.info-group div {
     font-weight: bold;
     padding: 10px 0;
     font-size: 1rem;
 }
-.info-group a{
+
+.info-group a {
     display: block;
     padding: 5px 0;
     max-width: 150px;
@@ -72,23 +79,27 @@ nav h1 {
     color: #333;
 }
 
-.profile-data{
+.profile-data {
     display: flex;
     flex-direction: column;
     width: 75%;
 }
+
 .profile-data .detail-group1 {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
-.group-1{
+
+.group-1 {
     width: 100%;
 }
+
 .container {
     display: grid;
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
 }
+
 .line-break {
     border: 1px solid rgba(46, 40, 46, 0.603);
     max-width: 100%;
@@ -100,27 +111,39 @@ nav h1 {
     padding: 0;
     margin: 0;
 }
-.group-2{
+
+.group-2 {
     display: flex;
     margin: 20px 0;
     justify-content: space-between;
 }
+
 .form {
     margin: 15px 0;
 }
-.form-control, .form-group {
+
+.form-control,
+.form-group {
     display: block;
 
 }
+
 .form-control {
     width: 100%;
     box-sizing: border-box;
     padding: 8px;
     outline: 0;
     border: none;
-    /* border-bottom: 1px solid purple; */
 }
-.btn-password {
+
+input,
+textarea {
+    background: rgba(148, 190, 245, 0.158);
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.btn-update {
     display: block;
     width: 100%;
     padding: 10px;
@@ -147,7 +170,19 @@ nav h1 {
     font-size: 14px;
     cursor: pointer;
 }
+
 .upload-btn input {
     visibility: none;
     display: none;
+}
+
+.status {
+    color: rgb(106, 190, 106);
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.not-active {
+    color: rgb(184, 61, 39);
+    text-transform: capitalize;
+    font-weight: bold;
 }

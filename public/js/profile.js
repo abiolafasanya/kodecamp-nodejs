@@ -6,8 +6,8 @@ let ID = localStorage.getItem("userId");
 
 // redirect and clear token and id
 function Redirect() {
-  localStorage.clear()
-  window.location.assign("/login")
+  localStorage.clear();
+  window.location.assign("/login");
 }
 
 uploadBtn.addEventListener("click", perform);
@@ -74,6 +74,58 @@ fileUpload.addEventListener("change", (e) => {
 });
 
 //profile upload {}
+
+// updat profile picture
+const btnUpdate = document.querySelector("#btn-update")
+btnUpdate.addEventListener('click', e => {
+  e.preventDefault()
+  let phone = document.querySelector("#phone").value
+  let occupation = document.querySelector("#occupation").value
+  let location = document.querySelector("#location").value
+  let address = document.querySelector("#address").value
+  console.log(phone, occupation, location, address)
+
+  const formData = new FormData();
+  formData.append("phone", phone);
+  formData.append("occupation", occupation);
+  formData.append("location", location);
+  formData.append("address", address);
+  btnUpdate.textContent = "uploading profile...";
+  btnUpdate.style.backgroundColor = "rgb(80, 4, 80)";
+  
+fetch(`/user/profile/${ID}`, {
+  method: "PUT",
+  headers: {
+    Authorization: `Bearer ` + `${TOKEN}`,
+  },
+  body: formData,
+})
+  .then((res) => {
+    console.log(res);
+    return res.json();
+  })
+  .then((data) => {
+    console.log(data);
+    if (data.ok) {
+      console.log(data.ok);
+      console.log(data.photo);
+      
+      btnUpdate.textContent = "profile updated successfully";
+      btnUpdate.style.backgroundColor = "rgb(106, 190, 106)";
+    } else {
+      console.log(data.ok);
+      btnUpdate.textContent = "Error encountered while processing";
+      btnUpdate.style.backgroundColor = "rgb(241, 98, 98)";
+    }
+
+    setTimeout(() => {
+      btnUpdate.style.backgroundColor = "rgb(80, 4, 80)";
+      btnUpdate.textContent = "Update Profile";
+    }, 5000);
+  });
+})
+
+  // load page data
 window.addEventListener("load", () => {
   console.log({ storageToken: TOKEN });
   fetch(`/user/profile/${ID}`, {
@@ -97,16 +149,19 @@ window.addEventListener("load", () => {
         document.querySelector("#email").innerHTML = data.profile.email;
         document.querySelector("#updated_at").innerHTML =
           data.profile.updatedAt;
-        document.querySelector("#status").innerHTML = data.status;
-        document.querySelector("#profile_id").innerHTML = data.profile.id;
+        let status = document.querySelector("#status");
+        status.classList.add("status");
+        status.innerHTML = data.profile.status.status;
+        // status.class = "status-active"
+        document.querySelector("#profile_id").innerHTML = data.profile._id;
         document.querySelector("#account_id").innerHTML =
           data.profile.accountId;
-        document.querySelector("#address").innerHTML = data.profile.address;
-        document.querySelector("#phone").innerHTML = data.profile.phone;
-        document.querySelector("#location").innerHTML = data.profile.location;
-        document.querySelector("#occupation").innerHTML =
+        document.querySelector("#address").value = data.profile.address;
+        document.querySelector("#phone").value = data.profile.phone;
+        document.querySelector("#location").value = data.profile.location;
+        document.querySelector("#occupation").value =
           data.profile.occupation;
-        data.profile.photo === undefined || null
+        data.profile.photo == null || undefined
           ? (document.querySelector("#photo").src = "/img/nopics.jpg")
           : (document.querySelector(
               "#photo"
@@ -117,11 +172,13 @@ window.addEventListener("load", () => {
     });
 });
 
-const deleteProfile = document.querySelector("#deleteProfile")
-deleteProfile.addEventListener('click', (e) => {
-  e.preventDefault()
-  let confirmDelete = confirm("Are you sure you want to execute this action?")
-  if(confirmDelete){
+
+/* delete user */
+const deleteProfile = document.querySelector("#deleteProfile");
+deleteProfile.addEventListener("click", (e) => {
+  e.preventDefault();
+  let confirmDelete = confirm("Are you sure you want to execute this action?");
+  if (confirmDelete) {
     fetch(`/api/user/${ID}`, {
       method: "DELETE",
       headers: {
@@ -135,21 +192,20 @@ deleteProfile.addEventListener('click', (e) => {
         return res.json();
       })
       .then((data) => {
-        console.log(data.ok)
-        if(!data.ok){
-          return alert(data.message)
+        console.log(data.ok);
+        if (!data.ok) {
+          return alert(data.message);
         }
-        alert(data.message)
-        Redirect()
-      })
+        alert(data.message);
+        Redirect();
+      });
+  } else {
+    alert("Action canceled");
   }
-  else{
-    alert("Action canceled")
-  }
-})
+});
 
 // logout user
-const logoutUser = document.querySelector("#logoutUser")
-logoutUser.addEventListener("click", e => {
-  Redirect()
-})
+const logoutUser = document.querySelector("#logoutUser");
+logoutUser.addEventListener("click", (e) => {
+  Redirect();
+});
