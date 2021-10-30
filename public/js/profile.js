@@ -1,6 +1,8 @@
 const fileUpload = document.querySelector(".upload");
 const uploadBtn = document.querySelector(".upload-btn");
 const uploadProgress = document.querySelector(".upload_progress");
+let TOKEN = localStorage.getItem("token");
+let ID = localStorage.getItem("userId");
 
 uploadBtn.addEventListener("click", perform);
 console.log("mounted");
@@ -30,8 +32,7 @@ fileUpload.addEventListener("change", (e) => {
   formData.append("photo", file);
   uploadBtn.textContent = "uploading image...";
   uploadBtn.style.backgroundColor = "rgb(80, 4, 80)";
-  let TOKEN = localStorage.getItem("token");
-  let ID = localStorage.getItem("userId");
+
   // ID = JSON.parse(ID)
 
   fetch(`/user/profile/${ID}`, {
@@ -68,13 +69,11 @@ fileUpload.addEventListener("change", (e) => {
 
 //profile upload {}
 window.addEventListener("load", () => {
-  let TOKEN = localStorage.getItem("token");
-  let ID = localStorage.getItem("userId");
   console.log({ storageToken: TOKEN });
   fetch(`/user/profile/${ID}`, {
     method: "GET",
     headers: {
-      Authorization: "Bearer " + `${TOKEN}`,
+      Authorization: `Bearer ` + `${TOKEN}`,
       Accept: "application/json",
       "Content-Type": "application/json",
     },
