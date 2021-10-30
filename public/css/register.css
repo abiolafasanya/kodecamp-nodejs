@@ -7,6 +7,12 @@ body {
     display: none;
     visibility: none;
 }
+.visible {
+    display: inline-block;
+    visibility: visible;
+    font-size: 18px;
+}
+
 .error{
     color: red;
     background: rgb(224, 201, 201);

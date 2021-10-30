@@ -43,6 +43,12 @@ loginForm.addEventListener("submit", (e) => {
         }, 6000);
         email = e.target.email.value = "";
         password = e.target.password.value = "";
+        let userProfile = document.querySelector("#userProfile")
+        userProfile.setAttribute("class", `visible`)
+        userProfile.setAttribute("href", `/profile/${data.id}`)
+        e.target.email.setAttribute("disabled", "true")
+        e.target.password.setAttribute("disabled", "true")
+        e.target.loginBtn.setAttribute("disabled", "true")
       } else {
         console.log(data.ok, data.message);
         let msg = document.createTextNode(data.message);

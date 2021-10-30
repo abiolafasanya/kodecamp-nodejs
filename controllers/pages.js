@@ -1,5 +1,6 @@
 const path = require("path");
 const {contactModel} = require("../models/contact");
+const {userModel} = require("../models/users");
 const mailService = require("../service/mail");
 
 exports.contactPage = (req, res) => {
@@ -7,8 +8,13 @@ exports.contactPage = (req, res) => {
   console.log("Hello world this is abiola fasanya");
 };
 
-exports.profile = (req, res) => {
+exports.profile = async (req, res) => {
   console.log("Profile Upload page");
+  let findUser = await userModel.findOne({_id: req.params.id})
+  if(!findUser){
+    console.log('User not found')
+    res.status(404).json({ok: false, message: "user not found"})
+  }
   res.sendFile(path.resolve("./views/profile.html"));
 };
 

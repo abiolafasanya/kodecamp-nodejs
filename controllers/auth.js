@@ -130,12 +130,20 @@ exports.signin = async (req, res) => {
       };
 
       const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
-      return res.status(200).json({
-        ok: true,
-        message: "User loggedIn",
-        token,
-        id: user.id,
-      });
+      // create storeSessionToken 
+      user.sessionToken = token;
+      user.save((err) => {
+        if (err) {
+          res.status(500).json({ message: err });
+          return;
+        }
+        return res.status(200).json({
+          ok: true,
+          message: "User loggedIn",
+          token,
+          id: user.id,
+        });
+      })
     } else {
       res
         .status(404)

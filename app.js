@@ -29,7 +29,7 @@ app.get("/user/profile/:id", auth, controller.profile); // get user info
 
 /*Endpoints for pages*/
 app.get("/", pagesController.contactPage);
-app.get("/profile", pagesController.profile);
+app.get("/profile/:id", pagesController.profile);
 app.get("/login", pagesController.login);
 app.get("/register", pagesController.register);
 app.post("/contact", auth, pagesController.contact);
