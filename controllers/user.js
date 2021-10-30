@@ -119,8 +119,24 @@ exports.updateProfile = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-  let id = { _id: req.params.id };
   try {
+      let id = { _id: req.params.id };
+      let findUser =  await userModel.findOne(id)
+      if(!findUser){
+        console.log('users not found')
+        return res.status(404).json({ok: false, message: 'user not found'})
+      }
+      // delete profile
+      let deleteProfile = await profileModel.deleteOne({email: findUser.email})
+      if(!deleteProfile){
+        console.log('unable to delete profile')
+        return res.status(400).json({
+          ok: false,
+          message: "unable to delete profile"
+        })
+      }
+      console.log('user profile removed')
+      // remove user too
     userModel.deleteOne(id, (err, user) => {
       if (err) {
         res.status(400).json({ status: 400, message: err.message });
@@ -129,6 +145,7 @@ exports.deleteUser = async (req, res) => {
       if (!user) {
         res.status(404).json({ ok: false, message: "user not found" });
       }
+
       res.status(200).json({
         ok: true,
         message: "User has been deleted",
@@ -142,6 +159,10 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+exports.logout = async (req, res) => {
+  
+}
 
 exports.api = (req, res) => {
   res.json({

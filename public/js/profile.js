@@ -4,6 +4,12 @@ const uploadProgress = document.querySelector(".upload_progress");
 let TOKEN = localStorage.getItem("token");
 let ID = localStorage.getItem("userId");
 
+// redirect and clear token and id
+function Redirect() {
+  localStorage.clear()
+  window.location.assign("/login")
+}
+
 uploadBtn.addEventListener("click", perform);
 console.log("mounted");
 
@@ -110,3 +116,40 @@ window.addEventListener("load", () => {
       }
     });
 });
+
+const deleteProfile = document.querySelector("#deleteProfile")
+deleteProfile.addEventListener('click', (e) => {
+  e.preventDefault()
+  let confirmDelete = confirm("Are you sure you want to execute this action?")
+  if(confirmDelete){
+    fetch(`/api/user/${ID}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ` + `${TOKEN}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data.ok)
+        if(!data.ok){
+          return alert(data.message)
+        }
+        alert(data.message)
+        Redirect()
+      })
+  }
+  else{
+    alert("Action canceled")
+  }
+})
+
+// logout user
+const logoutUser = document.querySelector("#logoutUser")
+logoutUser.addEventListener("click", e => {
+  Redirect()
+})
