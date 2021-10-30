@@ -155,9 +155,11 @@ exports.addUser = (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    let { name, photo, location, address, occupation } = req.body;
-    photo = req.file;
-    let updateUser = { name, photo, location, address, occupation };
+    let { name, location, address, occupation } = req.body;
+    pics = req.file === undefined || null ? "nopics.jpg" : req.file.filename;
+
+    console.log(pics, req.file)
+    let updateUser = { name, photo: pics, location, address, occupation };
     let id = { _id: req.params.id };
     userModel.findOne(id, (err, user) => {
       if (user) {
@@ -169,6 +171,7 @@ exports.updateProfile = async (req, res) => {
           res.status(201).json({
             ok: true,
             data: result,
+            photo: pics,
             message: `User profile updated`,
           });
         });

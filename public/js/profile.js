@@ -1,7 +1,6 @@
 const fileUpload = document.querySelector(".upload");
 const uploadBtn = document.querySelector(".upload-btn");
 const uploadProgress = document.querySelector(".upload_progress");
-const profileImage = document.querySelector(".pics");
 
 uploadBtn.addEventListener("click", perform);
 console.log("mounted");
@@ -50,9 +49,8 @@ fileUpload.addEventListener("change", (e) => {
       console.log(data);
       if (data.ok) {
         console.log(data.ok);
-        console.log(data.data.photo.path);
-        // profileImage.setAttribute('src', `${data.data.photo.filename}`)
-        profileImage.src = `${data.data.photo.path}`;
+        console.log(data.photo);
+        document.querySelector("#photo").src = `/img/${data.photo}`;
         uploadBtn.textContent = "Image uploaded successfully";
         uploadBtn.style.backgroundColor = "rgb(106, 190, 106)";
       } else {
@@ -88,21 +86,26 @@ window.addEventListener("load", () => {
     .then((data) => {
       console.log(data.ok);
       if (data.ok) {
-        console.log(data.profile)
-        console.log(data.profile.name)
+        console.log(data.profile);
+        console.log(data.profile.name);
         document.querySelector("#username").innerHTML = data.profile.name;
         document.querySelector("#email").innerHTML = data.profile.email;
-        document.querySelector("#updated_at").innerHTML = data.profile.updatedAt;
+        document.querySelector("#updated_at").innerHTML =
+          data.profile.updatedAt;
         document.querySelector("#status").innerHTML = data.status;
         document.querySelector("#profile_id").innerHTML = data.profile.id;
-        document.querySelector("#account_id").innerHTML = data.profile.accountId;
+        document.querySelector("#account_id").innerHTML =
+          data.profile.accountId;
         document.querySelector("#address").innerHTML = data.profile.address;
         document.querySelector("#phone").innerHTML = data.profile.phone;
         document.querySelector("#location").innerHTML = data.profile.location;
-        document.querySelector("#occupation").innerHTML = data.profile.occupation;
-        document.querySelector("#photo").src = `/img/${data.profile.photo.filename}` || null;
+        document.querySelector("#occupation").innerHTML =
+          data.profile.occupation;
+        let pics = (document.querySelector("#photo").src =
+          `/img/${data.profile.photo}` || "/img/nopics.jpg");
+        console.log(pics);
       } else {
         console.log(data.ok);
       }
-    })
+    });
 });
