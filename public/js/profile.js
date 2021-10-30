@@ -100,11 +100,11 @@ window.addEventListener("load", () => {
         document.querySelector("#location").innerHTML = data.profile.location;
         document.querySelector("#occupation").innerHTML =
           data.profile.occupation;
-          if (data.profile.photo === undefined || null){
-            let pics = (document.querySelector("#photo").src ="/img/nopics.jpg");
-          }
-        let pics = (document.querySelector("#photo").src =`/img/${data.profile.photo}`;
-        console.log(pics);
+        data.profile.photo === undefined || null
+          ? (document.querySelector("#photo").src = "/img/nopics.jpg")
+          : (document.querySelector(
+              "#photo"
+            ).src = `/img/${data.profile.photo}`);
       } else {
         console.log(data.ok);
       }
