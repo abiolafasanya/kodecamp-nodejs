@@ -156,7 +156,7 @@ exports.addUser = (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     let { name, location, address, occupation } = req.body;
-    pics = req.file === undefined || null ? "nopics.jpg" : req.file.filename;
+    pics = req.file === undefined || null ? null : req.file.filename;
 
     console.log(pics, req.file)
     let updateUser = { name, photo: pics, location, address, occupation };

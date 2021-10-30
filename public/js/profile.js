@@ -100,8 +100,10 @@ window.addEventListener("load", () => {
         document.querySelector("#location").innerHTML = data.profile.location;
         document.querySelector("#occupation").innerHTML =
           data.profile.occupation;
-        let pics = (document.querySelector("#photo").src =
-          `/img/${data.profile.photo}` || "/img/nopics.jpg");
+          if (data.profile.photo === undefined || null){
+            let pics = (document.querySelector("#photo").src ="/img/nopics.jpg");
+          }
+        let pics = (document.querySelector("#photo").src =`/img/${data.profile.photo}`;
         console.log(pics);
       } else {
         console.log(data.ok);
