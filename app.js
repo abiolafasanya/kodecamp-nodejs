@@ -36,9 +36,8 @@ app.post("/contact", auth, pagesController.contact);
 
 /* Authorization route */
 app.get("/user/verify", authController.verify);
-app.get("/api/users", controller.getUsers);
+app.get("/api/users", auth, controller.getUsers);
 app.get("/api/user/:id", auth, controller.singleUser);
-app.post("/api/user", auth, upload.single("photo"), controller.addUser);
 app.delete("/api/user/:id", auth, controller.deleteUser);
 app.put("/user/profile/:id", auth, upload.single("photo"), controller.updateProfile);
 

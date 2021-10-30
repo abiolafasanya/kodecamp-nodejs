@@ -1,36 +1,6 @@
 // const { Users } = require("../models/User");
 const { userModel, profileModel } = require("../models/users");
 
-exports.profilePics = (req, res) => {
-  try {
-    let id = req.params.id;
-    let user = Users.find((user) => {
-      if (user.id === id) return true;
-      else return false;
-    });
-    if (user) {
-      console.log(user);
-      console.log(req.file, "resykt");
-      user.photo = req.file;
-      res.status(200).json({
-        ok: true,
-        data: user,
-        img: user.photo,
-      });
-      console.log(req.file);
-    } else {
-      console.log(user);
-      res.status(400).json({
-        ok: false,
-        error: "user not found",
-      });
-    }
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-    console.log(err.message);
-  }
-};
-
 exports.profile = async (req, res) => {
  try {
   let id = {_id: req.params.id}
@@ -106,49 +76,6 @@ exports.singleUser = (req, res) => {
     res.status(500).json({
       status: 500,
       message: [err.message, "User not found"],
-    });
-  }
-};
-
-exports.addUser = (req, res) => {
-  try {
-    let pics = req.file === undefined || null ? null : req.file.path;
-    let createUser = {
-      name: req.body.name,
-      email: req.body.email,
-      photo: pics,
-    };
-
-    // check if user exists
-    let ifEmailExists = userModel.findOne(
-      { email: req.body.email },
-      (err, user) => {
-        if (user.email === createUser.email) return true;
-        else {
-          console.log(err.message);
-          return false;
-        }
-      }
-    );
-    // end of checking
-    if (ifEmailExists)
-      return res.status(400).json({
-        message: "Email already taken",
-      });
-
-    let newUser = Users.create(createUser);
-    if (newUser) {
-      res.status(201).json({
-        ok: true,
-        data: createUser,
-        message: "User Inserted",
-      });
-    } else
-      return res.status(400).json({ status: 400, error: "Operation Failed" });
-  } catch (err) {
-    res.status(500).json({
-      ok: false,
-      message: err.message,
     });
   }
 };
