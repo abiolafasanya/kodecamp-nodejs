@@ -44,7 +44,7 @@ loginForm.addEventListener("submit", (e) => {
         email = e.target.email.value = "";
         password = e.target.password.value = "";
         let userProfile = document.querySelector("#userProfile")
-        userProfile.setAttribute("class", `visible`)
+        userProfile.setAttribute("class", `btn-link`)
         userProfile.setAttribute("href", `/profile/${data.id}`)
         e.target.email.setAttribute("disabled", "true")
         e.target.password.setAttribute("disabled", "true")
