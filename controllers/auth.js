@@ -1,6 +1,7 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 const { SECRET } = process.env;
 const joi = require("joi");
 const { v4: uuid } = require("uuid");
@@ -171,7 +172,8 @@ exports.verify = async (req, res) => {
           subject: "Account Activated",
           body: pageWelcome(name, Url),
         });
-        res.status(200).json({ ok: true, message: "account activated" });
+        // res.status(200).json({ ok: true, message: "account activated" });
+        res.sendFile(path.resolve("./views/activated.html"));
       });
     });
   } catch (err) {
