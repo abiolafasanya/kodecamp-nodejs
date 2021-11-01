@@ -1,11 +1,20 @@
 require("dotenv").config();
 const { SMTP_EMAIL, SMTP_PASSWORD, SMTP_PORT, SECURE } = process.env;
 const nodemailer = require("nodemailer");
+const secure = SECURE === "false" ? false : true;
+
+/** 
+ * checking the type and converting from string value to a boolean value
+ * this is to prevent error while sending email
+ * console.log(typeof secure, secure)  //to test the result
+ * console.log(typeof secure)
+ * my solution to the error while sending email for local and live
+ * */
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: SMTP_PORT || 587,
-  secure: SECURE || false,
+  port: SMTP_PORT,
+  secure: secure,
   auth: {
     user: SMTP_EMAIL,
     pass: SMTP_PASSWORD,
