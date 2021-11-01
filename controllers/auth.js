@@ -6,6 +6,7 @@ const joi = require("joi");
 const { v4: uuid } = require("uuid");
 const { userModel, profileModel, permissionModel } = require("../models/users");
 const mailService = require("../service/mail");
+const { pageInvite, pageWelcome } = require("../public/js/emailTemplate");
 // console.log(userModel, profileModel);
 
 exports.signup = async (req, res) => {
@@ -76,15 +77,7 @@ exports.signup = async (req, res) => {
     mailService.sendEmail({
       email: data.email,
       subject: "Verify your account",
-      body: `
-        <h1> Account Confirmation </h1>
-        <h2>Hi, ${data.name}</h2> 
-        <p>
-          Please click on the verification link below to activaate your account
-          <br>
-          <a href="${Url}/user/verify/?token=${token}">Click to verify</a>
-        </p>
-      `,
+      body: pageInvite(name, Url, token),
     });
 
     res
@@ -130,7 +123,7 @@ exports.signin = async (req, res) => {
       };
 
       const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
-      // create storeSessionToken 
+      // create storeSessionToken
       user.sessionToken = token;
       user.save((err) => {
         if (err) {
@@ -143,7 +136,7 @@ exports.signin = async (req, res) => {
           token,
           id: user.id,
         });
-      })
+      });
     } else {
       res
         .status(404)
@@ -163,11 +156,9 @@ exports.verify = async (req, res) => {
         return res.status(404).json({ ok: false, message: "User not found" });
       }
       let getURl = jwt.verify(user.confirmationCode, SECRET);
-      //  let getURl = jwt.verify(confirmationCode, SECRET, (err, user)=> {
-      //    if (user) return user.Url
-      //   })
       console.log(getURl);
       let Url = await getURl.Url;
+      let name = await getURl.name;
       user.status = "activated";
       user.save((err) => {
         if (err) {
@@ -178,15 +169,7 @@ exports.verify = async (req, res) => {
         mailService.sendEmail({
           email: user.email,
           subject: "Account Activated",
-          body: `
-          <h1> Account Activated </h1>
-          <h3>Hi, ${user.name}</h3> 
-          <p>
-            This is to notify you that your account ahas been activated
-            <br>
-            <a href="${Url}/profile">View your Profile</a>
-          </p>
-      `,
+          body: pageWelcome(name, Url),
         });
         res.status(200).json({ ok: true, message: "account activated" });
       });
