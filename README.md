@@ -30,33 +30,33 @@
 ### Register
 - Register
 > POST 
-> http://localhost:3000/register
->https://kodecamp.herokuapp.com/register
+> http://localhost:3000/signup
+>https://kodecamp.herokuapp.com/signup
 ### Login
 - login
 > POST 
-> http://localhost:3000/login
->https://kodecamp.herokuapp.com/login
+> http://localhost:3000/signin
+>https://kodecamp.herokuapp.com/signin
 ### Profile
 > Requires Authentication | Authorization [bearer token]
 - Profile
 > GET
-> http://localhost:3000/profile
->https://kodecamp.herokuapp.com/profile
+> http://localhost:3000/user/profile
+>https://kodecamp.herokuapp.com/user/profile
 
 ## For front End Preview and Testing
 >Methods here is GET method
 ### SignIn Page
-> http://localhost:3000/signin
->https://kodecamp.herokuapp.com/signin
+> http://localhost:3000/login
+>https://kodecamp.herokuapp.com/login
 
 ### SignUP Page
-> http://localhost:3000/signup
->https://kodecamp.herokuapp.com/signup
+> http://localhost:3000/register
+>https://kodecamp.herokuapp.com/register
 
 ### Profile Page
-> http://localhost:3000/user/profile
->https://kodecamp.herokuapp.com/user/profile
+> http://localhost:3000/user/profile/:id
+>https://kodecamp.herokuapp.com/user/profile/:id
 
 ## Api Endpoint
 > Base Url: kodecamp.herokuapp.com
