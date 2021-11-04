@@ -17,6 +17,7 @@ app.use(express.static(path.resolve("upload")));
 const db = require("./config/db");
 const controller = require("./controllers/user");
 const authController = require("./controllers/auth");
+const resetController = require("./controllers/reset");
 const pagesController = require("./controllers/pages");
 const auth = require("./middleware/auth");
 const { upload } = require("./utils/upload");
@@ -26,6 +27,10 @@ app.get("/api", controller.api);
 app.post("/signin", authController.signin);
 app.post("/signup", authController.signup);
 app.get("/user/profile/:id", auth, controller.profile); // get user info
+
+// password reset
+app.post("/password-reset", resetController.requestPwdReset);
+app.post("/password-reset/:id/:token", resetController.resetPassword);
 
 /*Endpoints for pages*/
 app.get("/", pagesController.contactPage);
@@ -39,7 +44,12 @@ app.get("/user/verify", authController.verify);
 app.get("/api/users", auth, controller.getUsers);
 app.get("/api/user/:id", auth, controller.singleUser);
 app.delete("/api/user/:id", auth, controller.deleteUser);
-app.put("/user/profile/:id", auth, upload.single("photo"), controller.updateProfile);
+app.put(
+  "/user/profile/:id",
+  auth,
+  upload.single("photo"),
+  controller.updateProfile
+);
 
 app.listen(PORT, () => {
   console.log("Server running on port %d", PORT);

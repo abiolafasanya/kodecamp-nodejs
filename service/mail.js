@@ -2,6 +2,7 @@ require("dotenv").config();
 const { SMTP_EMAIL, SMTP_PASSWORD, SMTP_PORT, SECURE } = process.env;
 const nodemailer = require("nodemailer");
 const secure = SECURE === "false" ? false : true;
+const PORT = parseInt(SMTP_PORT)
 
 /** 
  * checking the type and converting from string value to a boolean value
@@ -13,7 +14,7 @@ const secure = SECURE === "false" ? false : true;
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: SMTP_PORT,
+  port: PORT,
   secure: secure,
   auth: {
     user: SMTP_EMAIL,

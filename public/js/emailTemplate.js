@@ -1,7 +1,6 @@
-exports.pageInvite =  (name, Url, token) => `
+exports.verifyEmail =  (name, Url, token) => `
 <!DOCTYPE html>
 <html>
-
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -15,21 +14,18 @@ exports.pageInvite =  (name, Url, token) => `
                 font-weight: 400;
                 src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
             }
-
             @font-face {
                 font-family: 'Lato';
                 font-style: normal;
                 font-weight: 700;
                 src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
             }
-
             @font-face {
                 font-family: 'Lato';
                 font-style: italic;
                 font-weight: 400;
                 src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
             }
-
             @font-face {
                 font-family: 'Lato';
                 font-style: italic;
@@ -37,7 +33,6 @@ exports.pageInvite =  (name, Url, token) => `
                 src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
             }
         }
-
         /* CLIENT-SPECIFIC STYLES */
         body,
         table,
@@ -46,17 +41,14 @@ exports.pageInvite =  (name, Url, token) => `
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
         }
-
         table,
         td {
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
         }
-
         img {
             -ms-interpolation-mode: bicubic;
         }
-
         /* RESET STYLES */
         img {
             border: 0;
@@ -65,18 +57,15 @@ exports.pageInvite =  (name, Url, token) => `
             outline: none;
             text-decoration: none;
         }
-
         table {
             border-collapse: collapse !important;
         }
-
         body {
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
         }
-
         /* iOS BLUE LINKS */
         a[x-apple-data-detectors] {
             color: inherit !important;
@@ -86,7 +75,6 @@ exports.pageInvite =  (name, Url, token) => `
             font-weight: inherit !important;
             line-height: inherit !important;
         }
-
         /* MOBILE STYLES */
         @media screen and (max-width:600px) {
             h1 {
@@ -94,14 +82,12 @@ exports.pageInvite =  (name, Url, token) => `
                 line-height: 32px !important;
             }
         }
-
         /* ANDROID CENTER FIX */
         div[style*="margin: 16px 0;"] {
             margin: 0 !important;
         }
     </style>
 </head>
-
 <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
     <!-- HIDDEN PREHEADER TEXT -->
     <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account. </div>
@@ -150,7 +136,6 @@ exports.pageInvite =  (name, Url, token) => `
         </tr>
     </table>
 </body>
-
 </html>
 `;
 
@@ -159,7 +144,6 @@ exports.pageInvite =  (name, Url, token) => `
 exports.pageWelcome =  (name, Url) => `
 <!DOCTYPE html>
 <html>
-
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -173,21 +157,18 @@ exports.pageWelcome =  (name, Url) => `
                 font-weight: 400;
                 src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v11/qIIYRU-oROkIk8vfvxw6QvesZW2xOQ-xsNqO47m55DA.woff) format('woff');
             }
-
             @font-face {
                 font-family: 'Lato';
                 font-style: normal;
                 font-weight: 700;
                 src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v11/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
             }
-
             @font-face {
                 font-family: 'Lato';
                 font-style: italic;
                 font-weight: 400;
                 src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v11/RYyZNoeFgb0l7W3Vu1aSWOvvDin1pK8aKteLpeZ5c0A.woff) format('woff');
             }
-
             @font-face {
                 font-family: 'Lato';
                 font-style: italic;
@@ -195,7 +176,6 @@ exports.pageWelcome =  (name, Url) => `
                 src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v11/HkF_qI1x_noxlxhrhMQYELO3LdcAZYWl9Si6vvxL-qU.woff) format('woff');
             }
         }
-
         /* CLIENT-SPECIFIC STYLES */
         body,
         table,
@@ -204,17 +184,14 @@ exports.pageWelcome =  (name, Url) => `
             -webkit-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
         }
-
         table,
         td {
             mso-table-lspace: 0pt;
             mso-table-rspace: 0pt;
         }
-
         img {
             -ms-interpolation-mode: bicubic;
         }
-
         /* RESET STYLES */
         img {
             border: 0;
@@ -223,18 +200,15 @@ exports.pageWelcome =  (name, Url) => `
             outline: none;
             text-decoration: none;
         }
-
         table {
             border-collapse: collapse !important;
         }
-
         body {
             height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
         }
-
         /* iOS BLUE LINKS */
         a[x-apple-data-detectors] {
             color: inherit !important;
@@ -244,7 +218,6 @@ exports.pageWelcome =  (name, Url) => `
             font-weight: inherit !important;
             line-height: inherit !important;
         }
-
         /* MOBILE STYLES */
         @media screen and (max-width:600px) {
             h1 {
@@ -252,14 +225,12 @@ exports.pageWelcome =  (name, Url) => `
                 line-height: 32px !important;
             }
         }
-
         /* ANDROID CENTER FIX */
         div[style*="margin: 16px 0;"] {
             margin: 0 !important;
         }
     </style>
 </head>
-
 <body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
     <!-- HIDDEN PREHEADER TEXT -->
     <div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: 'Lato', Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account. </div>
@@ -308,6 +279,5 @@ exports.pageWelcome =  (name, Url) => `
         </tr>
     </table>
 </body>
-
 </html>
 `;

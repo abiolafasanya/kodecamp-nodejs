@@ -7,7 +7,7 @@ const joi = require("joi");
 const { v4: uuid } = require("uuid");
 const { userModel, profileModel, permissionModel } = require("../models/users");
 const mailService = require("../service/mail");
-const { pageInvite, pageWelcome } = require("../public/js/emailTemplate");
+const { verifyEmail, pageWelcome } = require("../public/js/emailTemplate");
 // console.log(userModel, profileModel);
 
 exports.signup = async (req, res) => {
@@ -78,7 +78,7 @@ exports.signup = async (req, res) => {
     mailService.sendEmail({
       email: data.email,
       subject: "Verify your account",
-      body: pageInvite(name, Url, token),
+      body: verifyEmail(name, Url, token),
     });
 
     res
@@ -153,7 +153,7 @@ exports.verify = async (req, res) => {
   try {
     userModel.findOne(confirmationCode, async (err, user) => {
       if (!user) {
-        console.log(err.message);
+        console.log({ok: false, message: err + 'user not found'});
         return res.status(404).json({ ok: false, message: "User not found" });
       }
       let getURl = jwt.verify(user.confirmationCode, SECRET);
@@ -161,6 +161,7 @@ exports.verify = async (req, res) => {
       let Url = await getURl.Url;
       let name = await getURl.name;
       user.status = "activated";
+      user.token = "";
       user.save((err) => {
         if (err) {
           res.status(500).json({ message: err });
@@ -177,6 +178,6 @@ exports.verify = async (req, res) => {
       });
     });
   } catch (err) {
-    res.status(500).json({ err: err.message });
+    res.status(500).json({ ok: false, message: err.message });
   }
 };

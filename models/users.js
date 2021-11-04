@@ -30,7 +30,8 @@ const userSchema = new Schema(
     sessionToken: {
       type: String,
       unique: true,
-    }
+      default: "",
+    },
   },
   { timestamps: true }
 );
@@ -67,8 +68,8 @@ const profileSchema = new Schema(
     },
     phone: {
       type: Number,
-    min: [10, 'Must be at least 10, got {VALUE}'],
-    max: 14
+      min: [10, "Must be at least 10, got {VALUE}"],
+      max: 14,
     },
     photo: {
       data: Buffer,
