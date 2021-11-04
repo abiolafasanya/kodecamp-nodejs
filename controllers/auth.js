@@ -45,7 +45,7 @@ exports.signup = async (req, res) => {
       name,
       email,
       password,
-      confirmationCode: token,
+      verificationCode: token,
     };
     const ifUser = await userModel.create(newUser);
     if (!ifUser)
@@ -149,14 +149,14 @@ exports.signin = async (req, res) => {
 };
 
 exports.verify = async (req, res) => {
-  let confirmationCode = { confirmationCode: req.query.token };
+  let verificationCode = { verificationCode: req.query.token };
   try {
-    userModel.findOne(confirmationCode, async (err, user) => {
+    userModel.findOne(verificationCode, async (err, user) => {
       if (!user) {
         console.log({ok: false, message: err + 'user not found'});
         return res.status(404).json({ ok: false, message: "User not found" });
       }
-      let getURl = jwt.verify(user.confirmationCode, SECRET);
+      let getURl = jwt.verify(user.verificationCode, SECRET);
       console.log(getURl);
       let Url = await getURl.Url;
       let name = await getURl.name;

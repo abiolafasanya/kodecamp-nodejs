@@ -23,7 +23,7 @@ const userSchema = new Schema(
       default: "pending",
       trim: true,
     },
-    confirmationCode: {
+    verificationCode: {
       type: String,
       unique: true,
     },
