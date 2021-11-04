@@ -66,8 +66,28 @@ exports.resetPassword = async (req, res) => {
 
     const user = await userModel.findOne({ _id: req.params.id });
     console.log(user, password);
+    if(!user){
+      console.log({ok: false, message: 'user not found'})
+      res.status(404).json({ok: false, message: 'User no found'})
+    }
+    // find token
+    const token = await tokenModel.findOne({
+      userId: user._id,
+      token: req.params.token
+    })
+    if(!token){
+      console.log({ok: false, message: 'invalid link or expired'})
+      res.status(400).json({ok: false, message: 'invalid link or expired'})
+    }
+    console.log(token)
+    user.password = password
+    await user.save()
+    await token.delete()
+
+    res.status(200).json({ok: true, message: 'password reset successful'})
   } catch (err) {
     res.status(500).json({ ok: false, message: err.message });
+    console.log(err, err.message)
   }
 };
 
