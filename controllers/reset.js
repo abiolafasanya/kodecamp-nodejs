@@ -30,6 +30,7 @@ exports.requestPwdReset = async (req, res) => {
         userId: user._id,
         token: uuid(),
       }).save();
+      const Url = req.protocol + "://" + req.get("host");
 
       // send reset password email
       console.log({
@@ -38,7 +39,6 @@ exports.requestPwdReset = async (req, res) => {
         token: uuid(),
         userId: user._id,
       });
-      const Url = req.protocol + "://" + req.get("host");
       mailService.sendEmail({
         email: data.email,
         subject: "Password Reset",
