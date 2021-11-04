@@ -161,7 +161,7 @@ exports.verify = async (req, res) => {
       let Url = await getURl.Url;
       let name = await getURl.name;
       user.status = "activated";
-      user.token = "";
+      user.verificationCode = "";
       user.save((err) => {
         if (err) {
           res.status(500).json({ message: err });
