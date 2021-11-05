@@ -9,6 +9,7 @@ const { userModel } = require("../models/users");
 const { tokenModel } = require("../models/token");
 const mailService = require("../service/mail");
 const { resetPassword } = require("../public/js/emailResetTemplate");
+
 // password reset
 exports.requestPwdReset = async (req, res) => {
   const objSchema = joi.object({
@@ -23,39 +24,8 @@ exports.requestPwdReset = async (req, res) => {
       console.log("user not found");
       return res.status(404).json({ ok: false, message: "User not found" });
     }
-    let token = await tokenModel.findOne({ userId: user._id });
-    console.log(token);
-    if (!token) {
-      token = await new tokenModel({
-        userId: user._id,
-        token: uuid(),
-      }).save();
-      const Url = req.protocol + "://" + req.get("host");
-
-      // send reset password email
-      console.log({
-        name: user.name,
-        Url,
-        token: uuid(),
-        userId: user._id,
-      });
-
-      mailService.sendEmail({
-        email: data.email,
-        subject: "Password Reset",
-        body: resetPassword({
-          name: user.name,
-          Url,
-          token: uuid(),
-          userId: user._id,
-        }),
-      });
-      // response to CLIENT
-      res.status(200).json({
-        ok: true,
-        message: "An email with instruction has been sent to your " + email,
-      });
-    }
+    // generate link to send to user
+    generatePasswordResetLink({ userId: user._id, email, name: user.name });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ ok: false, message: err.message });
@@ -98,4 +68,35 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-// create new user
+generatePasswordResetLink = async (userId, email, name) => {
+  try {
+    const token = await tokenModel.findOne({ userId: userId });
+    if (!token) {
+      console.log("creating and sending token");
+      let genToken = uuid();
+      token = await new tokenModel({
+        userId,
+        token: genToken,
+      }).save();
+      const Url = req.protocol + "://" + req.get("host");
+      const link = `${Url}/password-reset/${userId}/${genToken}`;
+      console.log(link);
+
+      // send reset password email
+      mailService.sendEmail({
+        email: email,
+        subject: "Password Reset",
+        body: resetPassword({ name, link }),
+      });
+
+      // response to CLIENT
+      res.status(200).json({
+        ok: true,
+        message: "An email with instruction has been sent to your " + email,
+      });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ ok: false, message: err.message });
+  }
+};

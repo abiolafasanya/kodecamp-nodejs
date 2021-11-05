@@ -1,5 +1,5 @@
 
-exports.resetPassword = (name, Url, token, userId) => `
+exports.resetPassword = (name, link) => `
 <!DOCTYPE html>
 <html>
     <head>
@@ -131,7 +131,8 @@ exports.resetPassword = (name, Url, token, userId) => `
                         <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                             <p style="margin: 0;">Hi ${name}, <br/><br/>If you requested a password reset, use the confirmation link below to complete the process. If you didn't make this request, ignore this email. </p><br/>
                             <p style="margin: 0;"><strong>
-                                <a href="${Url}/${userId}/${token}">Click on reset password link</a>
+                                <a href="${link}">Click on reset password link</a>
+                                or copy and paste the following link in your browser: ${link}</strong>
                             </strong></p>
                         </td>
                     </tr>
