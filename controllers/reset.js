@@ -25,14 +25,10 @@ exports.requestPwdReset = async (req, res) => {
       return res.status(404).json({ ok: false, message: "User not found" });
     }
     // generate link to send to user
-    generatePasswordResetLink({ userId: user._id, email, name: user.name });
-    
-      // response to CLIENT
-      res.status(200).json({
-        ok: true,
-        message: "An email with instruction has been sent to your " + email,
-      });
-
+    let name = user.name;
+    let userId = user._id;
+    console.log(name, userId);
+    generatePasswordResetLink(userId, email, name, req, res);
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ ok: false, message: err.message });
@@ -75,13 +71,17 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
-generatePasswordResetLink = async (userId, email, name) => {
+generatePasswordResetLink = async (userId, email, name, req, res) => {
   try {
     const token = await tokenModel.findOne({ userId: userId });
+    if (token) {
+      await token.delete();
+      res.json({ ok: false, message: "token already exists try again" });
+    }
     if (!token) {
       console.log("creating and sending token");
       let genToken = uuid();
-      token = await new tokenModel({
+      await new tokenModel({
         userId,
         token: genToken,
       }).save();
@@ -93,11 +93,17 @@ generatePasswordResetLink = async (userId, email, name) => {
       mailService.sendEmail({
         email: email,
         subject: "Password Reset",
-        body: resetPassword({ name, link }),
+        body: resetPassword(name, link),
+      });
+
+      // response to CLIENT
+      res.status(200).json({
+        ok: true,
+        message: "An email with instruction has been sent to " + email,
       });
     }
-    console.log('token generated: %s', genToken)
   } catch (err) {
     console.log(err.message);
+    res.status(500).json({ ok: false, message: err.message });
   }
 };
