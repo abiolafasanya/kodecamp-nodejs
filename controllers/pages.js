@@ -33,6 +33,13 @@ exports.requestPwdReset = (req, res) => {
   res.sendFile(path.resolve("./views/pwdreset.html"));
 };
 
+exports.createPassword = (req, res) => {
+  console.log("SignIn page");
+  let { id, token } = req.params;
+  console.log(id, token);
+  res.sendFile(path.resolve("./views/createpassword.html"));
+};
+
 exports.contact = async (req, res) => {
   console.log("Hello world this is contact page");
   const objSchema = joi.object({

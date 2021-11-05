@@ -31,7 +31,8 @@ app.get("/user/profile/:id", auth, controller.profile); // get user info
 // password reset
 app.get("/password-reset", pagesController.requestPwdReset);
 app.post("/password-reset", resetController.requestPwdReset);
-app.post("/password-reset/:id/:token", resetController.resetPassword);
+app.get("/create-password/:id/:token", pagesController.createPassword);
+app.post("/create-password/:id/:token", resetController.createPassword);
 
 /*Endpoints for pages*/
 app.get("/", pagesController.contactPage);

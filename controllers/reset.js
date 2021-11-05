@@ -27,7 +27,6 @@ exports.requestPwdReset = async (req, res) => {
     // generate link to send to user
     let name = user.name;
     let userId = user._id;
-    console.log(name, userId);
     generatePasswordResetLink(userId, email, name, req, res);
   } catch (err) {
     console.log(err.message);
@@ -35,7 +34,7 @@ exports.requestPwdReset = async (req, res) => {
   }
 };
 
-exports.resetPassword = async (req, res) => {
+exports.createPassword = async (req, res) => {
   console.log("hello reset password");
   const objSchema = joi.object({
     password: joi.string().required(),
@@ -48,7 +47,7 @@ exports.resetPassword = async (req, res) => {
     console.log(user, password);
     if (!user) {
       console.log({ ok: false, message: "user not found" });
-      res.status(404).json({ ok: false, message: "User no found" });
+     return res.status(404).json({ ok: false, message: "User no found" });
     }
     // find token
     const token = await tokenModel.findOne({
@@ -57,7 +56,7 @@ exports.resetPassword = async (req, res) => {
     });
     if (!token) {
       console.log({ ok: false, message: "invalid link or expired" });
-      res.status(400).json({ ok: false, message: "invalid link or expired" });
+      return res.status(400).json({ ok: false, message: "invalid link or expired" });
     }
     console.log(token);
     user.password = password;
@@ -86,8 +85,7 @@ generatePasswordResetLink = async (userId, email, name, req, res) => {
         token: genToken,
       }).save();
       const Url = req.protocol + "://" + req.get("host");
-      const link = `${Url}/password-reset/${userId}/${genToken}`;
-      console.log(link);
+      const link = `${Url}/create-password/${userId}/${genToken}`;
 
       // send reset password email
       mailService.sendEmail({
