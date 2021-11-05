@@ -27,8 +27,21 @@ createPwdForm.addEventListener("submit", (e) => {
     }, 6000);
     return;
   }
+
+  if (password.length < 8) {
+    let msg = document.createTextNode("Password must be at least 8 characters");
+    let msgAlert = document.createElement("div");
+    msgAlert.appendChild(msg);
+    msgAlert.classList.add("error");
+    main.insertBefore(msgAlert, createPwdForm);
+    setTimeout(() => {
+      msgAlert.classList.add("hidden");
+    }, 6000);
+    return;
+  }
+
   const formData = {
-    email,
+    password: password,
   };
   fetch(pwdResetURL, {
     method: "POST",
