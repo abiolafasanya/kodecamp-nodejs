@@ -47,19 +47,18 @@ exports.createPassword = async (req, res) => {
     console.log(user, password);
     if (!user) {
       console.log({ ok: false, message: "user not found" });
-     return res.status(404).json({ ok: false, message: "User no found" });
+      return res.status(404).json({ ok: false, message: "User no found" });
     }
     // find token
-    const token = await tokenModel.findOne({
-      userId: user._id,
-      token: req.params.token,
-    });
+    const token = await tokenModel.findOne({ userId: user._id });
     if (!token) {
       console.log({ ok: false, message: "invalid link or expired" });
-      return res.status(400).json({ ok: false, message: "invalid link or expired" });
+      return res
+        .status(400)
+        .json({ ok: false, message: "invalid link or expired" });
     }
     console.log(token);
-    user.password = password;
+    user.password = bcrypt.hashSync(password, 10);
     await user.save();
     await token.delete();
 
