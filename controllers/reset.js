@@ -39,6 +39,7 @@ exports.requestPwdReset = async (req, res) => {
         token: uuid(),
         userId: user._id,
       });
+
       mailService.sendEmail({
         email: data.email,
         subject: "Password Reset",
@@ -51,7 +52,7 @@ exports.requestPwdReset = async (req, res) => {
       });
       // response to CLIENT
       res.status(200).json({
-        ok: ture,
+        ok: true,
         message: "An email with instruction has been sent to your " + email,
       });
     }

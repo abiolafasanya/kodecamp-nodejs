@@ -29,6 +29,7 @@ app.post("/signup", authController.signup);
 app.get("/user/profile/:id", auth, controller.profile); // get user info
 
 // password reset
+app.get("/password-reset", pagesController.requestPwdReset);
 app.post("/password-reset", resetController.requestPwdReset);
 app.post("/password-reset/:id/:token", resetController.resetPassword);
 

@@ -28,6 +28,11 @@ exports.login = (req, res) => {
   res.sendFile(path.resolve("./views/login.html"));
 };
 
+exports.requestPwdReset = (req, res) => {
+  console.log("SignIn page");
+  res.sendFile(path.resolve("./views/pwdreset.html"));
+};
+
 exports.contact = async (req, res) => {
   console.log("Hello world this is contact page");
   const objSchema = joi.object({
