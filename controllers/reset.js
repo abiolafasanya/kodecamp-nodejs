@@ -26,6 +26,13 @@ exports.requestPwdReset = async (req, res) => {
     }
     // generate link to send to user
     generatePasswordResetLink({ userId: user._id, email, name: user.name });
+    
+      // response to CLIENT
+      res.status(200).json({
+        ok: true,
+        message: "An email with instruction has been sent to your " + email,
+      });
+
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ ok: false, message: err.message });
@@ -88,15 +95,9 @@ generatePasswordResetLink = async (userId, email, name) => {
         subject: "Password Reset",
         body: resetPassword({ name, link }),
       });
-
-      // response to CLIENT
-      res.status(200).json({
-        ok: true,
-        message: "An email with instruction has been sent to your " + email,
-      });
     }
+    console.log('token generated: %s', genToken)
   } catch (err) {
     console.log(err.message);
-    res.status(500).json({ ok: false, message: err.message });
   }
 };
