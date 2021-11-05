@@ -83,7 +83,7 @@ exports.signup = async (req, res) => {
 
     res
       .status(201)
-      .json({ ok: true, profile, message: "User Registration Successful" });
+      .json({ ok: true, profile, message: "User Registration Successful, check your email to verify your account" });
   } catch (err) {
     res.status(422).json({ ok: false, message: err.message });
   }
