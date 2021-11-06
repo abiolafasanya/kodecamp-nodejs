@@ -25,7 +25,6 @@ const userSchema = new Schema(
     },
     verificationCode: {
       type: String,
-      unique: true,
     },
   },
   { timestamps: true }
