@@ -125,7 +125,6 @@ exports.signin = async (req, res) => {
 
       const token = jwt.sign(payload, SECRET, { expiresIn: 86400 });
       // create storeSessionToken
-      user.sessionToken = token;
       user.save((err) => {
         if (err) {
           res.status(500).json({ message: err });
