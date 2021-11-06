@@ -9,7 +9,7 @@ const pagesController = require("../controllers/pages");
 const { upload } = require("../utils/upload");
 
 // @route   GET /api
-router.get("/api", controller.api);
+router.get("/", controller.api);
 
 /* Login, register, and profile operation route */
 

@@ -5,7 +5,7 @@ const auth = require("../middleware/auth");
 const pagesController = require("../controllers/pages");
 
 // @route GET /
-router.get("/", pagesController.contactPage);
+router.get("/contact", pagesController.contactPage);
 router.post("/contact", auth, pagesController.contact);
 
 module.exports = router;

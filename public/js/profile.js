@@ -179,7 +179,7 @@ deleteProfile.addEventListener("click", (e) => {
   e.preventDefault();
   let confirmDelete = confirm("Are you sure you want to execute this action?");
   if (confirmDelete) {
-    fetch(`/api/user/${ID}`, {
+    fetch(`/user/${ID}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ` + `${TOKEN}`,
