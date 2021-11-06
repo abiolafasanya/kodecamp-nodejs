@@ -39,8 +39,8 @@ router.put(
 // @route   POST /password-reset 
 router.post("/password-reset", resetController.requestPwdReset);
 
-// @route   POST /create-password/:id/:token
-router.post("/create-password/:id/:token", resetController.createPassword);
+// @route   POST /reset-password/:id/:token
+router.post("/reset-password/:id/:token", resetController.createPassword);
 
 /* End of password and Reset operation route 
 *****************************************************************************
