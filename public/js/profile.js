@@ -75,7 +75,7 @@ fileUpload.addEventListener("change", (e) => {
 
 //profile upload {}
 
-// updat profile picture
+// update profile picture
 const btnUpdate = document.querySelector("#btn-update")
 btnUpdate.addEventListener('click', e => {
   e.preventDefault()

@@ -177,9 +177,6 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
-  
-}
 
 exports.api = (req, res) => {
   res.json({
