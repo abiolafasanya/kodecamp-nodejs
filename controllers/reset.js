@@ -84,7 +84,7 @@ generatePasswordResetLink = async (userId, email, name, req, res) => {
         token: genToken,
       }).save();
       const Url = req.protocol + "://" + req.get("host");
-      const link = `${Url}/reset-password/${userId}/${genToken}`;
+      const link = `${Url}/create-password/${userId}/${genToken}`;
 
       // send reset password email
       mailService.sendEmail({
