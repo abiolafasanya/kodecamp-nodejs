@@ -149,7 +149,8 @@ window.addEventListener("load", () => {
         document.querySelector("#email").innerHTML = data.profile.email;
         let dateupd = document.querySelector("#updated_at").innerHTML =
           data.profile.updatedAt;
-        dateupd = dateupd.toDateString();
+        let d = new Date(dateupd);
+        dateupd = d.toDateString()
         let status = document.querySelector("#status");
         status.classList.add("status");
         status.innerHTML = data.profile.status.status;
