@@ -55,7 +55,7 @@ router.get("/user/verify", authController.verify);
 router.get("/users", auth, controller.getUsers);
 
 // @route  GET /user/:id
-router.get("/api/user/:id", auth, controller.singleUser);
+router.get("/user/:id", auth, controller.singleUser);
 
 // @route  DELETE /user/:id
 router.delete("/user/:id", auth, controller.deleteUser);
