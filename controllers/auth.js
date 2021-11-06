@@ -163,7 +163,7 @@ exports.verify = async (req, res) => {
       user.verificationCode = "";
       await user.save((err) => {
         if (err) {
-          res.status(500).json({ OK: false, message: err.message });
+          res.status(500).json({ ok: false, message: err.message });
           return;
         }
         // account verification confirmation notification
