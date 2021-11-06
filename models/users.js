@@ -27,11 +27,6 @@ const userSchema = new Schema(
       type: String,
       unique: true,
     },
-    sessionToken: {
-      type: String,
-      unique: true,
-      default: "",
-    },
   },
   { timestamps: true }
 );
